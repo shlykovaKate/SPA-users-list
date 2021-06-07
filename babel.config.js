@@ -3,5 +3,5 @@ module.exports = {
      '@babel/preset-env',
      '@babel/preset-typescript'
   ],
-  plugins: ['@babel/plugin-proposal-class-properties']
+  plugins: ['@babel/plugin-proposal-class-properties', "babel-plugin-styled-components"]
 };
