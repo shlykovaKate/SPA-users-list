@@ -1,6 +1,5 @@
 import React, {
   FC,
-  useState,
   useEffect,
   Fragment,
 } from 'react';
@@ -17,7 +16,7 @@ const Users: FC = () => {
   const users = useAppSelector(selectUsers);
 
   const fetchUsers = () => {
-    console.log('dispatch(incrementAsync())', dispatch(incrementAsync()));
+    dispatch(incrementAsync());
   };
 
   useEffect(() => {
