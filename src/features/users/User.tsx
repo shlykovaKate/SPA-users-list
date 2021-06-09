@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
+import { IUser } from '../../types/types';
 
 const User: FC = () => {
-  const id:any = useParams();
+  const id:IUser = useParams();
 
   return (
     <h3>
