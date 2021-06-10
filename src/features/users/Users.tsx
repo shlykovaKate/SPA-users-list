@@ -6,21 +6,18 @@ import React, {
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import SearchInput from '../usersActionBar/SearchInput';
 import {
-  incrementAsync,
-  selectUsers,
+  fetchUsersAsync,
+  selectFilteredUsers,
 } from './usersSlice';
 
 const Users: FC = () => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(selectUsers);
-
-  const fetchUsers = () => {
-    dispatch(incrementAsync());
-  };
+  const users = useAppSelector(selectFilteredUsers);
 
   useEffect(() => {
-    fetchUsers();
+    dispatch(fetchUsersAsync());
   }, []);
 
   const DivGrid = styled.div`
@@ -29,18 +26,21 @@ const Users: FC = () => {
   `;
 
   return (
-    <DivGrid>
-      {users.map((user:any) => (
-        <Fragment key={user.id}>
-          <div><img src={user.avatar} alt={user.name} /></div>
-          <div><Link to={`/users/:${user.id}`}>{user.name}</Link></div>
-          <div>{user.login}</div>
-          <div>{user.email}</div>
-          <div>{user.phone}</div>
-          <div>Raiting</div>
-        </Fragment>
-      ))}
-    </DivGrid>
+    <>
+      <SearchInput />
+      <DivGrid>
+        {users.map((user) => (
+          <Fragment key={user.id}>
+            <div><img src={user.avatar} alt={user.name} /></div>
+            <div><Link to={`/users/:${user.id}`}>{user.name}</Link></div>
+            <div>{user.login}</div>
+            <div>{user.email}</div>
+            <div>{user.phone}</div>
+            <div>Raiting</div>
+          </Fragment>
+        ))}
+      </DivGrid>
+    </>
   );
 };
 
