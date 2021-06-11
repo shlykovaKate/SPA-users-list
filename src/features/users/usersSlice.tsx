@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 import fetchUsers from './usersAPI';
-import { UsersState, IUser, TselectUsers } from '../../types/types';
+import { UsersState, UserItem, UsersList } from '../../types/types';
 
 const initialState: UsersState = {
   users: [],
@@ -26,7 +26,7 @@ export const usersSlice = createSlice({
     addSearchText: (state, action: PayloadAction<string>) => {
       state.searchText = action.payload;
     },
-    loadFilteredUsers: (state, action: PayloadAction<IUser[]>) => {
+    loadFilteredUsers: (state, action: PayloadAction<UserItem[]>) => {
       state.filteredUsers = action.payload;
     },
   },
@@ -56,8 +56,8 @@ export const usersSlice = createSlice({
 
 export const { addSearchText, loadFilteredUsers } = usersSlice.actions;
 
-export const selectUsers: TselectUsers = (state) => state.users.users;
-export const selectFilteredUsers: TselectUsers = (state) => state.users.filteredUsers;
+export const selectUsers: UsersList = (state) => state.users.users;
+export const selectFilteredUsers: UsersList = (state) => state.users.filteredUsers;
 export const selectSearchText: (state: RootState) => string = (state) => state.users.searchText;
 
 export default usersSlice.reducer;

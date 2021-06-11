@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { IUser } from '../../types/types';
+import { UserItem } from '../../types/types';
 
 const User: FC = () => {
-  const id:IUser = useParams();
+  const id:UserItem = useParams();
 
   return (
     <h3>
