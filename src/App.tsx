@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import Users from './features/users/Users';
 import Leaders from './features/leaders/Leaders';
-import User from './features/users/User';
+import UserCard from './features/users/UserCard';
 
 const App: FC = () => (
   <Router>
@@ -27,7 +27,7 @@ const App: FC = () => (
         <Users />
       </Route>
       <Route path="/users/:id">
-        <User />
+        <UserCard />
       </Route>
     </Switch>
   </Router>
