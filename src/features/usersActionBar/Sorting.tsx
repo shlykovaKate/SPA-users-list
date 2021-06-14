@@ -4,6 +4,8 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   selectFilteredUsers,
   loadFilteredUsers,
+  selectSorting,
+  addSorting,
 } from '../users/usersSlice';
 import { SortItem } from '../../types/types';
 
@@ -17,28 +19,29 @@ const Select = styled.select`
 const Sorting: FC<SortItem> = ({ columnName }: SortItem) => {
   const dispatch = useAppDispatch();
   const filteredUsers = useAppSelector(selectFilteredUsers);
-
-  const deleteEmptyOption = (select: HTMLSelectElement) => {
-    const option = select.querySelector("option[value='']");
-    return option && option.remove();
-  };
+  const sorting = useAppSelector(selectSorting);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selects = document.querySelectorAll('select');
+    selects.forEach((select) => {
+      if (event.currentTarget !== select) select.value = '';
+    });
+
     switch (event.target.value) {
       case 'ASC': {
         const sortedUsers = filteredUsers.slice().sort((a, b) => (
           a[columnName] > b[columnName] ? 1 : -1
         ));
+        dispatch(addSorting({ columnName, rule: event.target.value }));
         dispatch(loadFilteredUsers(sortedUsers));
-        deleteEmptyOption(event.currentTarget);
         break;
       }
       case 'DSC': {
         const sortedUsers = filteredUsers.slice().sort((a, b) => (
           a[columnName] < b[columnName] ? 1 : -1
         ));
+        dispatch(addSorting({ columnName, rule: event.target.value }));
         dispatch(loadFilteredUsers(sortedUsers));
-        deleteEmptyOption(event.currentTarget);
         break;
       }
       default:
@@ -46,8 +49,8 @@ const Sorting: FC<SortItem> = ({ columnName }: SortItem) => {
   };
 
   return (
-    <Select onChange={handleChange}>
-      <option value="">...</option>
+    <Select onChange={handleChange} defaultValue={sorting.columnName === columnName ? sorting.rule : ''}>
+      {(sorting.columnName === columnName && sorting.rule !== '') ? null : <option value="">...</option>}
       <option value="ASC">A-Z</option>
       <option value="DSC">Z-A</option>
     </Select>

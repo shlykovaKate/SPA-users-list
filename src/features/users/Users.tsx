@@ -39,6 +39,11 @@ const Users: FC = () => {
 
   return (
     <>
+      <ul>
+        <li>
+          <Link to="/leaders">Leaders</Link>
+        </li>
+      </ul>
       <SearchInput />
       <Grid>
         <div>&nbsp;</div>

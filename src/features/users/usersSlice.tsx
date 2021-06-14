@@ -1,13 +1,22 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 import fetchUsers from './usersAPI';
-import { UsersState, User, UsersList } from '../../types/types';
+import {
+  UsersState,
+  User,
+  UsersList,
+  Sorting,
+} from '../../types/types';
 
 const initialState: UsersState = {
   users: [],
   status: 'idle',
   searchText: '',
   filteredUsers: [],
+  sorting: {
+    columnName: '',
+    rule: '',
+  },
 };
 
 export const fetchUsersAsync = createAsyncThunk(
@@ -25,6 +34,9 @@ export const usersSlice = createSlice({
   reducers: {
     addSearchText: (state, action: PayloadAction<string>) => {
       state.searchText = action.payload;
+    },
+    addSorting: (state, action: PayloadAction<Sorting>) => {
+      state.sorting = action.payload;
     },
     loadFilteredUsers: (state, action: PayloadAction<User[]>) => {
       state.filteredUsers = action.payload;
@@ -68,7 +80,12 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { addSearchText, loadFilteredUsers, changeUserRaiting } = usersSlice.actions;
+export const {
+  addSearchText,
+  loadFilteredUsers,
+  changeUserRaiting,
+  addSorting,
+} = usersSlice.actions;
 
 export const selectUsers: UsersList = (state) => state.users.users;
 export const selectFilteredUsers: UsersList = (state) => state.users.filteredUsers;
@@ -76,5 +93,6 @@ export const selectUser: (state:RootState, id:string) => User = (state, id) => (
   state.users.users.find((user:User) => user.id === id)
 );
 export const selectSearchText: (state: RootState) => string = (state) => state.users.searchText;
+export const selectSorting: (state: RootState) => Sorting = (state) => state.users.sorting;
 
 export default usersSlice.reducer;

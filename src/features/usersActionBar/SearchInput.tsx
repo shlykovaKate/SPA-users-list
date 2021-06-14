@@ -1,7 +1,8 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   selectUsers,
+  selectSearchText,
   addSearchText,
   loadFilteredUsers,
 } from '../users/usersSlice';
@@ -9,17 +10,13 @@ import {
 const SearchInput: FC = () => {
   const dispatch = useAppDispatch();
   const users = useAppSelector(selectUsers);
-
-  const [value, setValue] = useState<string>('');
+  const searchText = useAppSelector(selectSearchText);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const value = event.target.value.trim();
     dispatch(addSearchText(value));
-    if (value.trim()) {
+    if (value) {
       const filteredUsers = users.filter((user) => (
         user.name.indexOf(value) !== -1
         || user.login.indexOf(value) !== -1
@@ -33,8 +30,8 @@ const SearchInput: FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input placeholder="Type the search text" onChange={handleChange} value={value} />
+    <form>
+      <input placeholder="Type the search text" onChange={handleChange} value={searchText} />
     </form>
   );
 };
