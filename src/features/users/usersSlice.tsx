@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 import fetchUsers from './usersAPI';
-import { UsersState, UserItem, UsersList } from '../../types/types';
+import { UsersState, User, UsersList } from '../../types/types';
 
 const initialState: UsersState = {
   users: [],
@@ -26,8 +26,14 @@ export const usersSlice = createSlice({
     addSearchText: (state, action: PayloadAction<string>) => {
       state.searchText = action.payload;
     },
-    loadFilteredUsers: (state, action: PayloadAction<UserItem[]>) => {
+    loadFilteredUsers: (state, action: PayloadAction<User[]>) => {
       state.filteredUsers = action.payload;
+    },
+    changeUserRaiting: (state, action: PayloadAction<{ id:string;raiting:number; }>) => {
+      state.users
+        .find((user) => user.id === action.payload.id).raiting = action.payload.raiting;
+      state.filteredUsers
+        .find((user) => user.id === action.payload.id).raiting = action.payload.raiting;
     },
   },
   extraReducers: (builder) => {
@@ -37,14 +43,22 @@ export const usersSlice = createSlice({
       })
       .addCase(fetchUsersAsync.fulfilled, (state, action:PayloadAction<[]>) => {
         const users = action.payload.map(({
-          login: { uuid, username }, picture: { thumbnail }, name: { first, last }, email, phone,
+          login: { uuid, username },
+          picture: { thumbnail, large },
+          name: { first, last },
+          email,
+          phone,
         }) => ({
           id: uuid,
-          avatar: thumbnail,
+          picture: {
+            avatar: thumbnail,
+            large,
+          },
           name: `${first} ${last}`,
           login: username,
           email,
           phone,
+          raiting: 0,
         }));
 
         state.status = 'idle';
@@ -54,10 +68,13 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { addSearchText, loadFilteredUsers } = usersSlice.actions;
+export const { addSearchText, loadFilteredUsers, changeUserRaiting } = usersSlice.actions;
 
 export const selectUsers: UsersList = (state) => state.users.users;
 export const selectFilteredUsers: UsersList = (state) => state.users.filteredUsers;
+export const selectUser: (state:RootState, id:string) => User = (state, id) => (
+  state.users.users.find((user:User) => user.id === id)
+);
 export const selectSearchText: (state: RootState) => string = (state) => state.users.searchText;
 
 export default usersSlice.reducer;

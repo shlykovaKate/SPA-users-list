@@ -26,21 +26,17 @@ const Sorting: FC<SortItem> = ({ columnName }: SortItem) => {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     switch (event.target.value) {
       case 'ASC': {
-        const sortedUsers = filteredUsers.slice().sort((a, b) => {
-          if (a[columnName] > b[columnName]) return 1;
-          if (a[columnName] === b[columnName]) return 0;
-          return -1;
-        });
+        const sortedUsers = filteredUsers.slice().sort((a, b) => (
+          a[columnName] > b[columnName] ? 1 : -1
+        ));
         dispatch(loadFilteredUsers(sortedUsers));
         deleteEmptyOption(event.currentTarget);
         break;
       }
       case 'DSC': {
-        const sortedUsers = filteredUsers.slice().sort((a, b) => {
-          if (a[columnName] < b[columnName]) return 1;
-          if (a[columnName] === b[columnName]) return 0;
-          return -1;
-        });
+        const sortedUsers = filteredUsers.slice().sort((a, b) => (
+          a[columnName] < b[columnName] ? 1 : -1
+        ));
         dispatch(loadFilteredUsers(sortedUsers));
         deleteEmptyOption(event.currentTarget);
         break;

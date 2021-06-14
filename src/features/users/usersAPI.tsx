@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
-const fetchUsers: () => Promise<AxiosResponse> = () => axios.get('https://randomuser.me/api/?results=10');
+const fetchUsers = () => axios.get('https://randomuser.me/api/?results=10');
 
 export default fetchUsers;

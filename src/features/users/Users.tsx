@@ -13,7 +13,7 @@ import {
   selectFilteredUsers,
 } from './usersSlice';
 
-const DivGrid = styled.div`
+const Grid = styled.div`
 display: grid;
 grid-template-columns: 70px repeat(5, 1fr);
 
@@ -24,7 +24,7 @@ grid-template-columns: 70px repeat(5, 1fr);
 }
 `;
 
-const DivHeaderCell = styled.div`
+const HeaderCell = styled.div`
 display: flex;
 justify-content: space-between;
 `;
@@ -34,42 +34,42 @@ const Users: FC = () => {
   const users = useAppSelector(selectFilteredUsers);
 
   useEffect(() => {
-    dispatch(fetchUsersAsync());
+    if (users.length === 0) dispatch(fetchUsersAsync());
   }, []);
 
   return (
     <>
       <SearchInput />
-      <DivGrid>
+      <Grid>
         <div>&nbsp;</div>
-        <DivHeaderCell>
+        <HeaderCell>
           NAME
           <Sorting columnName="name" />
-        </DivHeaderCell>
-        <DivHeaderCell>
+        </HeaderCell>
+        <HeaderCell>
           LOGIN
           <Sorting columnName="login" />
-        </DivHeaderCell>
-        <DivHeaderCell>
+        </HeaderCell>
+        <HeaderCell>
           EMAIL
           <Sorting columnName="email" />
-        </DivHeaderCell>
-        <DivHeaderCell>
+        </HeaderCell>
+        <HeaderCell>
           PHONE
           <Sorting columnName="phone" />
-        </DivHeaderCell>
+        </HeaderCell>
         <div>RAITING</div>
         {users.map((user) => (
           <Fragment key={user.id}>
-            <div><img src={user.avatar} alt={user.name} /></div>
+            <div><img src={user.picture.avatar} alt={user.name} /></div>
             <div><Link to={`/users/:${user.id}`}>{user.name}</Link></div>
             <div>{user.login}</div>
             <div>{user.email}</div>
             <div>{user.phone}</div>
-            <div>Raiting</div>
+            <div>{user.raiting}</div>
           </Fragment>
         ))}
-      </DivGrid>
+      </Grid>
     </>
   );
 };
