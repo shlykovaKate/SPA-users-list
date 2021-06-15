@@ -15,9 +15,6 @@ const App: FC = () => (
       <li>
         <Link to="/users">Users</Link>
       </li>
-      <li>
-        <Link to="/leaders">Leaders</Link>
-      </li>
     </ul>
     <Switch>
       <Route path="/leaders">
