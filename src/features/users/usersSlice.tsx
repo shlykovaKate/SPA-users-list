@@ -47,6 +47,10 @@ export const usersSlice = createSlice({
       state.filteredUsers
         .find((user) => user.id === action.payload.id).raiting = action.payload.raiting;
     },
+    removeUser: (state, action: PayloadAction<string>) => {
+      state.users = state.users.filter((user) => user.id !== action.payload);
+      state.filteredUsers = state.filteredUsers.filter((user) => user.id !== action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -85,6 +89,7 @@ export const {
   loadFilteredUsers,
   changeUserRaiting,
   addSorting,
+  removeUser,
 } = usersSlice.actions;
 
 export const selectUsers: UsersList = (state) => state.users.users;
