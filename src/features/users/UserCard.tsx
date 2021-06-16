@@ -1,11 +1,14 @@
-import React, { FC } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { FC, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { Params } from '../../types/types';
 import {
   selectUser,
   changeUserRaiting,
+  selectFilteredUsers,
+  selectSorting,
+  loadFilteredUsers,
 } from './usersSlice';
 
 const IMG = styled.img`
@@ -21,10 +24,33 @@ margin: 10px auto 0;
 `;
 
 const UserCard: FC = () => {
-  const { id: paramId } = useParams<Params>();
-  const id = paramId.slice(1);
+  const { id } = useParams<Params>();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => selectUser(state, id));
+  const filteredUsers = useAppSelector(selectFilteredUsers);
+  const sorting = useAppSelector(selectSorting);
+
+  useEffect(() => {
+    if (sorting.columnName === 'raiting') {
+      switch (sorting.rule) {
+        case 'ASC': {
+          const sortedUsers = filteredUsers.slice().sort((a, b) => (
+            a.raiting > b.raiting ? 1 : -1
+          ));
+          dispatch(loadFilteredUsers(sortedUsers));
+          break;
+        }
+        case 'DSC': {
+          const sortedUsers = filteredUsers.slice().sort((a, b) => (
+            a.raiting < b.raiting ? 1 : -1
+          ));
+          dispatch(loadFilteredUsers(sortedUsers));
+          break;
+        }
+        default:
+      }
+    }
+  }, [user]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(changeUserRaiting({ id, raiting: Number(event.target.value) }));
@@ -32,6 +58,11 @@ const UserCard: FC = () => {
 
   return (
     <>
+      <ul>
+        <li>
+          <Link to="/leaders">Leaders</Link>
+        </li>
+      </ul>
       <div>
         <IMG src={user.picture.large} alt={user.name} />
       </div>

@@ -61,7 +61,7 @@ const Leaders: FC = () => {
         {sortedLeaders.map((leader) => (
           <Fragment key={leader.id}>
             <div><img src={leader.picture.avatar} alt={leader.name} /></div>
-            <div><Link to={`/users/:${leader.id}`}>{leader.name}</Link></div>
+            <div><Link to={`/users/${leader.id}`}>{leader.name}</Link></div>
             <div>{leader.login}</div>
             <div>{leader.email}</div>
             <div>{leader.phone}</div>

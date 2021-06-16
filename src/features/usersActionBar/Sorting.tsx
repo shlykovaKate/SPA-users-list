@@ -11,9 +11,7 @@ import { SortItem } from '../../types/types';
 
 const Select = styled.select`
   background: transparent;
-  margin: 0 10px 0 0;
   outline: none;
-  overflow: hidden;
 `;
 
 const Sorting: FC<SortItem> = ({ columnName }: SortItem) => {
