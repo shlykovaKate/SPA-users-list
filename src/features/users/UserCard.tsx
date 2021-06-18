@@ -1,11 +1,11 @@
 import React, { FC, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { Params } from '../../types/types';
 import {
   selectUser,
-  changeUserRaiting,
+  changeUserRating,
   selectFilteredUsers,
   selectSorting,
   loadFilteredUsers,
@@ -31,18 +31,18 @@ const UserCard: FC = () => {
   const sorting = useAppSelector(selectSorting);
 
   useEffect(() => {
-    if (sorting.columnName === 'raiting') {
+    if (sorting.columnName === 'rating') {
       switch (sorting.rule) {
         case 'ASC': {
           const sortedUsers = filteredUsers.slice().sort((a, b) => (
-            a.raiting > b.raiting ? 1 : -1
+            a.rating > b.rating ? 1 : -1
           ));
           dispatch(loadFilteredUsers(sortedUsers));
           break;
         }
         case 'DSC': {
           const sortedUsers = filteredUsers.slice().sort((a, b) => (
-            a.raiting < b.raiting ? 1 : -1
+            a.rating < b.rating ? 1 : -1
           ));
           dispatch(loadFilteredUsers(sortedUsers));
           break;
@@ -53,20 +53,15 @@ const UserCard: FC = () => {
   }, [user]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(changeUserRaiting({ id, raiting: Number(event.target.value) }));
+    dispatch(changeUserRating({ id, rating: Number(event.target.value) }));
   };
 
   return (
     <>
-      <ul>
-        <li>
-          <Link to="/leaders">Leaders</Link>
-        </li>
-      </ul>
       <div>
         <IMG src={user.picture.large} alt={user.name} />
       </div>
-      <Grid>
+      <Grid data-testid="user-card">
         <div>{user.name}</div>
         <div>{user.login}</div>
         <div>{user.email}</div>
@@ -74,7 +69,7 @@ const UserCard: FC = () => {
         <div>
           <input
             type="number"
-            defaultValue={user.raiting}
+            defaultValue={user.rating}
             max="3"
             min="-3"
             onChange={handleChange}

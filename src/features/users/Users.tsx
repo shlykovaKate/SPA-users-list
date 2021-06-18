@@ -1,6 +1,5 @@
 import React, {
   FC,
-  useEffect,
   Fragment,
 } from 'react';
 import { Link } from 'react-router-dom';
@@ -9,7 +8,6 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import SearchInput from '../usersActionBar/SearchInput';
 import Sorting from '../usersActionBar/Sorting';
 import {
-  fetchUsersAsync,
   selectFilteredUsers,
   removeUser,
 } from './usersSlice';
@@ -51,23 +49,14 @@ const Users: FC = () => {
   const dispatch = useAppDispatch();
   const users = useAppSelector(selectFilteredUsers);
 
-  useEffect(() => {
-    if (users.length === 0) dispatch(fetchUsersAsync());
-  }, []);
-
   const handleClick = (id: string) => {
     dispatch(removeUser(id));
   };
 
   return (
     <>
-      <ul>
-        <li>
-          <Link to="/leaders">Leaders</Link>
-        </li>
-      </ul>
       <SearchInput />
-      <Grid>
+      <Grid data-testid="grid-element">
         <div>&nbsp;</div>
         <HeaderCell>
           NAME
@@ -86,8 +75,8 @@ const Users: FC = () => {
           <Sorting columnName="phone" />
         </HeaderCell>
         <HeaderCell>
-          RAITING
-          <Sorting columnName="raiting" />
+          RATING
+          <Sorting columnName="rating" />
         </HeaderCell>
         <div>&nbsp;</div>
         {users.map((user) => (
@@ -97,7 +86,7 @@ const Users: FC = () => {
             <div>{user.login}</div>
             <div>{user.email}</div>
             <div>{user.phone}</div>
-            <div>{user.raiting}</div>
+            <div>{user.rating}</div>
             <div><Button type="button" onClick={() => handleClick(user.id)}>Delete</Button></div>
           </Fragment>
         ))}
