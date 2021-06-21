@@ -22,6 +22,7 @@ const SearchInput: FC = () => {
         || user.login.indexOf(value) !== -1
         || user.email.indexOf(value) !== -1
         || user.phone.indexOf(value) !== -1
+        || user.rating === Number(value)
       ));
       dispatch(loadFilteredUsers(filteredUsers));
     } else {

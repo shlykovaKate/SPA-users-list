@@ -18,7 +18,7 @@ export interface User {
   login: string;
   email: string;
   phone: string;
-  raiting: number;
+  rating: number;
 }
 
 export interface UsersState {

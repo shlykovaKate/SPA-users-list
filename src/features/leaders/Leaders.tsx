@@ -27,23 +27,23 @@ justify-content: space-between;
 const Leaders: FC = () => {
   const users = useAppSelector(selectUsers);
   const leaders = users.slice().sort((a, b) => (
-    b.raiting - a.raiting
+    b.rating - a.rating
   )).splice(0, 5);
 
-  const setOfRaiting = new Set();
-  leaders.forEach((leader) => setOfRaiting.add(leader.raiting));
+  const setOfRating = new Set();
+  leaders.forEach((leader) => setOfRating.add(leader.rating));
 
   let sortedLeaders: User[] = [];
-  setOfRaiting.forEach((value) => {
+  setOfRating.forEach((value) => {
     sortedLeaders = sortedLeaders.concat(leaders
-      .filter((leader) => leader.raiting === value)
+      .filter((leader) => leader.rating === value)
       .sort((a, b) => (a.name > b.name ? 1 : -1)));
   });
 
   return (
     <>
       <h2>Leaders</h2>
-      <Grid>
+      <Grid data-testid="grid-leaders">
         <div>&nbsp;</div>
         <HeaderCell>
           NAME
@@ -57,7 +57,7 @@ const Leaders: FC = () => {
         <HeaderCell>
           PHONE
         </HeaderCell>
-        <div>RAITING</div>
+        <div>RATING</div>
         {sortedLeaders.map((leader) => (
           <Fragment key={leader.id}>
             <div><img src={leader.picture.avatar} alt={leader.name} /></div>
@@ -65,7 +65,7 @@ const Leaders: FC = () => {
             <div>{leader.login}</div>
             <div>{leader.email}</div>
             <div>{leader.phone}</div>
-            <div>{leader.raiting}</div>
+            <div>{leader.rating}</div>
           </Fragment>
         ))}
       </Grid>

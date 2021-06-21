@@ -41,11 +41,11 @@ export const usersSlice = createSlice({
     loadFilteredUsers: (state, action: PayloadAction<User[]>) => {
       state.filteredUsers = action.payload;
     },
-    changeUserRaiting: (state, action: PayloadAction<{ id:string;raiting:number; }>) => {
+    changeUserRating: (state, action: PayloadAction<{ id:string;rating:number; }>) => {
       state.users
-        .find((user) => user.id === action.payload.id).raiting = action.payload.raiting;
+        .find((user) => user.id === action.payload.id).rating = action.payload.rating;
       state.filteredUsers
-        .find((user) => user.id === action.payload.id).raiting = action.payload.raiting;
+        .find((user) => user.id === action.payload.id).rating = action.payload.rating;
     },
     removeUser: (state, action: PayloadAction<string>) => {
       state.users = state.users.filter((user) => user.id !== action.payload);
@@ -74,7 +74,7 @@ export const usersSlice = createSlice({
           login: username,
           email,
           phone,
-          raiting: 0,
+          rating: 0,
         }));
 
         state.status = 'idle';
@@ -87,7 +87,7 @@ export const usersSlice = createSlice({
 export const {
   addSearchText,
   loadFilteredUsers,
-  changeUserRaiting,
+  changeUserRating,
   addSorting,
   removeUser,
 } = usersSlice.actions;
