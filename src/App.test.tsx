@@ -12,7 +12,13 @@ const mockStore = configureMockStore([thunk]);
 const initialState: UsersState = {
   users: [],
   status: 'idle',
-  searchText: '',
+  searchText: {
+    name: '',
+    login: '',
+    email: '',
+    phone: '',
+    rating: '',
+  },
   filteredUsers: [],
   sorting: {
     columnName: '',

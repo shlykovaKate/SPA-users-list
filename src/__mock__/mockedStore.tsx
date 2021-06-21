@@ -13,7 +13,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/men/14.jpg',
           large: 'https://randomuser.me/api/portraits/men/14.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
       {
         email: 'gunther.ley@example.com',
@@ -25,7 +25,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/men/14.jpg',
           large: 'https://randomuser.me/api/portraits/men/14.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
       {
         email: 'sjur.lastad@example.com',
@@ -37,7 +37,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/men/79.jpg',
           large: 'https://randomuser.me/api/portraits/men/79.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
       {
         email: 'alexander.martinez@example.com',
@@ -49,7 +49,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/men/12.jpg',
           large: 'https://randomuser.me/api/portraits/men/12.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
       {
         email: 'eva.aubert@example.com',
@@ -61,7 +61,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/women/18.jpg',
           large: 'https://randomuser.me/api/portraits/women/18.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
       {
         email: 'leonard.perez@example.com',
@@ -73,11 +73,17 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/men/35.jpg',
           large: 'https://randomuser.me/api/portraits/men/35.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
     ],
     status: 'idle',
-    searchText: '',
+    searchText: {
+      name: '',
+      login: '',
+      email: '',
+      phone: '',
+      rating: '',
+    },
     filteredUsers: [
       {
         email: 'alexander.martinez@example.com',
@@ -89,7 +95,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/men/12.jpg',
           large: 'https://randomuser.me/api/portraits/men/12.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
       {
         email: 'eva.aubert@example.com',
@@ -101,7 +107,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/women/18.jpg',
           large: 'https://randomuser.me/api/portraits/women/18.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
       {
         email: 'gun.alex@example.com',
@@ -113,7 +119,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/men/14.jpg',
           large: 'https://randomuser.me/api/portraits/men/14.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
       {
         email: 'gunther.ley@example.com',
@@ -125,7 +131,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/men/14.jpg',
           large: 'https://randomuser.me/api/portraits/men/14.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
       {
         email: 'leonard.perez@example.com',
@@ -137,7 +143,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/men/35.jpg',
           large: 'https://randomuser.me/api/portraits/men/35.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
       {
         email: 'sjur.lastad@example.com',
@@ -149,7 +155,7 @@ export const initialState = {
           avatar: 'https://randomuser.me/api/portraits/thumb/men/79.jpg',
           large: 'https://randomuser.me/api/portraits/men/79.jpg',
         },
-        rating: 0,
+        rating: '0',
       },
     ],
     sorting: {
@@ -170,6 +176,6 @@ export const filteredUsers = [
       avatar: 'https://randomuser.me/api/portraits/thumb/men/12.jpg',
       large: 'https://randomuser.me/api/portraits/men/12.jpg',
     },
-    rating: 0,
+    rating: '0',
   },
 ];

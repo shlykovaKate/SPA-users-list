@@ -18,13 +18,21 @@ export interface User {
   login: string;
   email: string;
   phone: string;
-  rating: number;
+  rating: string;
+}
+
+export interface SearchText {
+  name: string;
+  login: string;
+  email: string;
+  phone: string;
+  rating: string;
 }
 
 export interface UsersState {
   users: User[];
   status: 'idle' | 'loading' | 'failed';
-  searchText: string;
+  searchText: SearchText;
   filteredUsers: User[];
   sorting: Sorting
 }
