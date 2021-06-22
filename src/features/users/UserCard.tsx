@@ -1,15 +1,10 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { useAppSelector } from '../../app/hooks';
 import { Params } from '../../types/types';
-import {
-  selectUser,
-  changeUserRating,
-  selectFilteredUsers,
-  selectSorting,
-  loadFilteredUsers,
-} from './usersSlice';
+import { selectUser } from './usersSlice';
+import Rating from '../usersActionBar/Rating';
 
 const IMG = styled.img`
 margin: 0 auto;
@@ -25,36 +20,7 @@ margin: 10px auto 0;
 
 const UserCard: FC = () => {
   const { id } = useParams<Params>();
-  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => selectUser(state, id));
-  const filteredUsers = useAppSelector(selectFilteredUsers);
-  const sorting = useAppSelector(selectSorting);
-
-  useEffect(() => {
-    if (sorting.columnName === 'rating') {
-      switch (sorting.rule) {
-        case 'ASC': {
-          const sortedUsers = filteredUsers.slice().sort((a, b) => (
-            a.rating > b.rating ? 1 : -1
-          ));
-          dispatch(loadFilteredUsers(sortedUsers));
-          break;
-        }
-        case 'DSC': {
-          const sortedUsers = filteredUsers.slice().sort((a, b) => (
-            a.rating < b.rating ? 1 : -1
-          ));
-          dispatch(loadFilteredUsers(sortedUsers));
-          break;
-        }
-        default:
-      }
-    }
-  }, [user]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(changeUserRating({ id, rating: Number(event.target.value) }));
-  };
 
   return (
     <>
@@ -67,13 +33,7 @@ const UserCard: FC = () => {
         <div>{user.email}</div>
         <div>{user.phone}</div>
         <div>
-          <input
-            type="number"
-            defaultValue={user.rating}
-            max="3"
-            min="-3"
-            onChange={handleChange}
-          />
+          <Rating id={id} />
         </div>
       </Grid>
     </>

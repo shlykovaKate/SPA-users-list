@@ -3,46 +3,51 @@ import React, {
   Fragment,
 } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import SearchInput from '../usersActionBar/SearchInput';
 import Sorting from '../usersActionBar/Sorting';
+import Rating from '../usersActionBar/Rating';
 import {
   selectFilteredUsers,
   removeUser,
 } from './usersSlice';
 
 const Grid = styled.div`
-display: grid;
-grid-template-columns: 58px repeat(4, 1fr) 180px 80px;
-grid-gap: 1px;
-padding: 1px;
-margin: 20px 0 0;
-border-radius: 4px;
-color: rgba(0, 0, 0, 0.87);
-background: rgba(224, 224, 224, 1);
+  display: grid;
+  grid-template-columns: 58px repeat(4, 1fr) 180px 80px;
+  grid-gap: 1px;
+  padding: 1px;
+  margin: 20px 0 0;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.87);
+  background: rgba(224, 224, 224, 1);
 
-& > div {
-  display: flex;
-  align-items: center;
-  background: white;
-  padding: 5px;
-  box-sizing: border-box;
-}
+  & > div {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+`;
+
+const Div = styled.div`
+  background-color: ${(props) => props.theme.main};
 `;
 
 const HeaderCell = styled.div`
-display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
 `;
 
 const Img = styled.div`
-display: flex;
-justify-content: center;
+  justify-content: center;
+  background-color: ${(props) => props.theme.main};
 `;
 
 const Button = styled.button`
-margin: 0 auto;
+  margin: 0 auto;
 `;
 
 const Users: FC = () => {
@@ -53,11 +58,23 @@ const Users: FC = () => {
     dispatch(removeUser(id));
   };
 
+  const smallRating = {
+    main: 'darkorange',
+  };
+
+  const normalRating = {
+    main: 'white',
+  };
+
   return (
     <>
-      <SearchInput />
+      <SearchInput columnName="name" />
+      <SearchInput columnName="login" />
+      <SearchInput columnName="email" />
+      <SearchInput columnName="phone" />
+      <SearchInput columnName="rating" />
       <Grid data-testid="grid-element">
-        <div>&nbsp;</div>
+        <HeaderCell>&nbsp;</HeaderCell>
         <HeaderCell>
           NAME
           <Sorting columnName="name" />
@@ -78,16 +95,18 @@ const Users: FC = () => {
           RATING
           <Sorting columnName="rating" />
         </HeaderCell>
-        <div>&nbsp;</div>
+        <HeaderCell>&nbsp;</HeaderCell>
         {users.map((user) => (
           <Fragment key={user.id}>
-            <Img><img src={user.picture.avatar} alt={user.name} /></Img>
-            <div><Link to={`/users/${user.id}`}>{user.name}</Link></div>
-            <div>{user.login}</div>
-            <div>{user.email}</div>
-            <div>{user.phone}</div>
-            <div>{user.rating}</div>
-            <div><Button type="button" onClick={() => handleClick(user.id)}>Delete</Button></div>
+            <ThemeProvider theme={Number(user.rating) < -3 ? smallRating : normalRating}>
+              <Img><img src={user.picture.avatar} alt={user.name} /></Img>
+              <Div><Link to={`/users/${user.id}`}>{user.name}</Link></Div>
+              <Div>{user.login}</Div>
+              <Div>{user.email}</Div>
+              <Div>{user.phone}</Div>
+              <Div><Rating id={user.id} /></Div>
+              <Div><Button type="button" onClick={() => handleClick(user.id)}>Delete</Button></Div>
+            </ThemeProvider>
           </Fragment>
         ))}
       </Grid>

@@ -13,7 +13,7 @@ describe('<SearchInput />', () => {
   it('should work', () => {
     const store = mockStore(initialState);
     render(
-      <Provider store={store}><SearchInput /></Provider>,
+      <Provider store={store}><SearchInput columnName="name" /></Provider>,
     );
     const inputElement = screen.getByRole('textbox');
     expect(inputElement).toBeTruthy();
@@ -22,7 +22,7 @@ describe('<SearchInput />', () => {
   it('changing the input value', () => {
     const rootReducer = combineReducers({ users: reducer });
     const store = createStore(rootReducer, initialState);
-    render(<Provider store={store}><SearchInput /></Provider>);
+    render(<Provider store={store}><SearchInput columnName="name" /></Provider>);
     const inputElement = screen.getByRole('textbox');
     expect(inputElement.getAttribute('value')).toEqual('');
     fireEvent.change(inputElement, { target: { value: 'alex' } });
@@ -31,7 +31,7 @@ describe('<SearchInput />', () => {
 
   it('changing the input value to some spaces', () => {
     const store = mockStore(initialState);
-    render(<Provider store={store}><SearchInput /></Provider>);
+    render(<Provider store={store}><SearchInput columnName="name" /></Provider>);
     const inputElement = screen.getByRole('textbox');
     expect(inputElement.getAttribute('value')).toEqual('');
     fireEvent.change(inputElement, { target: { value: '   ' } });

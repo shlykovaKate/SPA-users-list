@@ -27,7 +27,7 @@ justify-content: space-between;
 const Leaders: FC = () => {
   const users = useAppSelector(selectUsers);
   const leaders = users.slice().sort((a, b) => (
-    b.rating - a.rating
+    Number(b.rating) - Number(a.rating)
   )).splice(0, 5);
 
   const setOfRating = new Set();

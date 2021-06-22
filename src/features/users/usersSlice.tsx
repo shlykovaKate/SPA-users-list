@@ -6,12 +6,19 @@ import {
   User,
   UsersList,
   Sorting,
+  SearchText,
 } from '../../types/types';
 
 const initialState: UsersState = {
   users: [],
   status: 'idle',
-  searchText: '',
+  searchText: {
+    name: '',
+    login: '',
+    email: '',
+    phone: '',
+    rating: '',
+  },
   filteredUsers: [],
   sorting: {
     columnName: '',
@@ -32,7 +39,7 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    addSearchText: (state, action: PayloadAction<string>) => {
+    addSearchText: (state, action: PayloadAction<SearchText>) => {
       state.searchText = action.payload;
     },
     addSorting: (state, action: PayloadAction<Sorting>) => {
@@ -41,7 +48,7 @@ export const usersSlice = createSlice({
     loadFilteredUsers: (state, action: PayloadAction<User[]>) => {
       state.filteredUsers = action.payload;
     },
-    changeUserRating: (state, action: PayloadAction<{ id:string;rating:number; }>) => {
+    changeUserRating: (state, action: PayloadAction<{ id: string; rating: string; }>) => {
       state.users
         .find((user) => user.id === action.payload.id).rating = action.payload.rating;
       state.filteredUsers
@@ -74,7 +81,7 @@ export const usersSlice = createSlice({
           login: username,
           email,
           phone,
-          rating: 0,
+          rating: '0',
         }));
 
         state.status = 'idle';
@@ -97,7 +104,22 @@ export const selectFilteredUsers: UsersList = (state) => state.users.filteredUse
 export const selectUser: (state:RootState, id:string) => User = (state, id) => (
   state.users.users.find((user:User) => user.id === id)
 );
-export const selectSearchText: (state: RootState) => string = (state) => state.users.searchText;
+export const selectSearchText: (state: RootState) => SearchText = (state) => state.users.searchText;
+export const selectSearchNameText: (state: RootState) => string = (state) => (
+  state.users.searchText.name
+);
+export const selectSearchLoginText: (state: RootState) => string = (state) => (
+  state.users.searchText.login
+);
+export const selectSearchEmailText: (state: RootState) => string = (state) => (
+  state.users.searchText.email
+);
+export const selectSearchPhoneText: (state: RootState) => string = (state) => (
+  state.users.searchText.phone
+);
+export const selectSearchRatingText: (state: RootState) => string = (state) => (
+  state.users.searchText.rating
+);
 export const selectSorting: (state: RootState) => Sorting = (state) => state.users.sorting;
 
 export default usersSlice.reducer;
