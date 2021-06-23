@@ -12,20 +12,21 @@ import Leaders from './features/leaders/Leaders';
 import UserCard from './features/users/UserCard';
 import { fetchUsersAsync } from './features/users/usersSlice';
 
-const Ul = styled.ul`
+const Menu = styled.ul`
   list-style: none;
   display: flex;
   padding: 0;
 `;
 
-const Li = styled.li`
+const MenuItem = styled.li`
   padding: 5px 10px;
-  border: 2px solid palevioletred;
+  border: 2px solid darkorange;
   border-radius: 3px;
   margin-right: 10px;
 
-  & a {
-    color: palevioletred;
+  a {
+    color: darkorange;
+    text-decoration: none;
   }
 `;
 
@@ -38,14 +39,14 @@ const App: FC = () => {
 
   return (
     <Router>
-      <Ul>
-        <Li>
+      <Menu>
+        <MenuItem>
           <Link to="/users">Users</Link>
-        </Li>
-        <Li>
+        </MenuItem>
+        <MenuItem>
           <Link to="/leaders">Leaders</Link>
-        </Li>
-      </Ul>
+        </MenuItem>
+      </Menu>
       <Switch>
         <Route path="/leaders">
           <Leaders />
