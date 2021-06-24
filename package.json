@@ -16,6 +16,7 @@
   "homepage": "https://github.com/shlykovaKate/SPA-users-list#readme",
   "scripts": {
     "test": "jest",
+    "prod": "npm run build && serve -s dist",
     "start": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "eslint": "eslint ./src",
@@ -70,6 +71,7 @@
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
+    "serve": "^12.0.0",
     "styled-components": "^5.3.0"
   }
 }

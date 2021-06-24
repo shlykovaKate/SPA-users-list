@@ -31,7 +31,7 @@ const Grid = styled.div`
   }
 `;
 
-const Div = styled.div`
+const Cell = styled.div`
   background-color: ${(props) => props.theme.main};
 `;
 
@@ -100,12 +100,12 @@ const Users: FC = () => {
           <Fragment key={user.id}>
             <ThemeProvider theme={Number(user.rating) < -3 ? smallRating : normalRating}>
               <Img><img src={user.picture.avatar} alt={user.name} /></Img>
-              <Div><Link to={`/users/${user.id}`}>{user.name}</Link></Div>
-              <Div>{user.login}</Div>
-              <Div>{user.email}</Div>
-              <Div>{user.phone}</Div>
-              <Div><Rating id={user.id} /></Div>
-              <Div><Button type="button" onClick={() => handleClick(user.id)}>Delete</Button></Div>
+              <Cell><Link to={`/users/${user.id}`}>{user.name}</Link></Cell>
+              <Cell>{user.login}</Cell>
+              <Cell>{user.email}</Cell>
+              <Cell>{user.phone}</Cell>
+              <Cell><Rating id={user.id} /></Cell>
+              <Cell><Button type="button" onClick={() => handleClick(user.id)}>Delete</Button></Cell>
             </ThemeProvider>
           </Fragment>
         ))}
