@@ -9,19 +9,42 @@ import { selectUsers } from '../users/usersSlice';
 import { User } from '../../types/types';
 
 const Grid = styled.div`
-display: grid;
-grid-template-columns: 70px repeat(5, 1fr);
+  display: grid;
+  grid-template-columns: 58px repeat(5, 1fr);
+  grid-gap: 1px;
+  padding: 1px;
+  margin: 20px 0 0;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.87);
+  background: rgba(224, 224, 224, 1);
 
-& div {
-  margin: 10px;
-  display: flex;
-  align-items: center;
-}
+  & > div {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: white;
+  }
 `;
 
 const HeaderCell = styled.div`
-display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  font-weight: bolder;
+`;
+
+const Img = styled.div`
+  justify-content: center;
+  background-color: ${(props) => props.theme.main};
+
+  img {
+    border-radius: 50%;
+  }
+`;
+
+const H2 = styled.h2`
+  margin: 20px 25px 10px;
 `;
 
 const Leaders: FC = () => {
@@ -42,9 +65,9 @@ const Leaders: FC = () => {
 
   return (
     <>
-      <h2>Leaders</h2>
+      <H2>Leaders:</H2>
       <Grid data-testid="grid-leaders">
-        <div>&nbsp;</div>
+        <HeaderCell>&nbsp;</HeaderCell>
         <HeaderCell>
           NAME
         </HeaderCell>
@@ -57,10 +80,10 @@ const Leaders: FC = () => {
         <HeaderCell>
           PHONE
         </HeaderCell>
-        <div>RATING</div>
+        <HeaderCell>RATING</HeaderCell>
         {sortedLeaders.map((leader) => (
           <Fragment key={leader.id}>
-            <div><img src={leader.picture.avatar} alt={leader.name} /></div>
+            <Img><img src={leader.picture.avatar} alt={leader.name} /></Img>
             <div><Link to={`/users/${leader.id}`}>{leader.name}</Link></div>
             <div>{leader.login}</div>
             <div>{leader.email}</div>

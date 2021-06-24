@@ -16,17 +16,21 @@ const Menu = styled.ul`
   list-style: none;
   display: flex;
   padding: 0;
+  margin: 0;
+  box-shadow: 0px 1px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px -1px 3px 0px rgb(0 0 0 / 12%);
 `;
 
 const MenuItem = styled.li`
-  padding: 5px 10px;
-  border: 2px solid darkorange;
-  border-radius: 3px;
-  margin-right: 10px;
+  padding: 15px;
 
   a {
-    color: darkorange;
+    color: #1976d2;
     text-decoration: none;
+    padding: 10px;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 `;
 
