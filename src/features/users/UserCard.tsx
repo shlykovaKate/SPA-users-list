@@ -7,15 +7,23 @@ import { selectUser } from './usersSlice';
 import Rating from '../usersActionBar/Rating';
 
 const IMG = styled.img`
-margin: 0 auto;
-display: block;
+  margin: 40px auto 50px;
+  display: block;
+  border-radius: 50%;
 `;
 
 const Grid = styled.div`
-display: flex;
-width: 50%;
-justify-content: space-between;
-margin: 10px auto 0;
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+  margin: 10px auto 0;
+`;
+
+const HeaderCell = styled.div`
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  text-align: center;
 `;
 
 const UserCard: FC = () => {
@@ -24,15 +32,26 @@ const UserCard: FC = () => {
 
   return (
     <>
-      <div>
-        <IMG src={user.picture.large} alt={user.name} />
-      </div>
+      <IMG src={user.picture.large} alt={user.name} />
       <Grid data-testid="user-card">
-        <div>{user.name}</div>
-        <div>{user.login}</div>
-        <div>{user.email}</div>
-        <div>{user.phone}</div>
         <div>
+          <HeaderCell>Name: </HeaderCell>
+          {user.name}
+        </div>
+        <div>
+          <HeaderCell>Login: </HeaderCell>
+          {user.login}
+        </div>
+        <div>
+          <HeaderCell>Email: </HeaderCell>
+          {user.email}
+        </div>
+        <div>
+          <HeaderCell>Phone: </HeaderCell>
+          {user.phone}
+        </div>
+        <div>
+          <HeaderCell>Rating: </HeaderCell>
           <Rating id={id} />
         </div>
       </Grid>

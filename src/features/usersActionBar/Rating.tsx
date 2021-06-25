@@ -50,7 +50,9 @@ const Rating: FC<Params> = ({ id }: Params) => {
   }, [user]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(changeUserRating({ id, rating: event.target.value }));
+    if (event.target.value) {
+      dispatch(changeUserRating({ id, rating: event.target.value }));
+    }
   };
 
   return (

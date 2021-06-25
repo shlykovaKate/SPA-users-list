@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   selectUsers,
@@ -12,6 +13,10 @@ import {
   selectSearchText,
 } from '../users/usersSlice';
 import { SortItem } from '../../types/types';
+
+const SearchInputArea = styled.div`
+  padding: 10px;
+`;
 
 const SearchInput: FC<SortItem> = ({ columnName }: SortItem) => {
   const dispatch = useAppDispatch();
@@ -66,12 +71,18 @@ const SearchInput: FC<SortItem> = ({ columnName }: SortItem) => {
   };
 
   return (
-    <div>
-      <span>
-        {`Search in ${columnName} column`}
-      </span>
-      <input type={columnName === 'rating' ? 'number' : 'text'} placeholder="Type the search text" onChange={handleChange} name={columnName} value={inputValue} />
-    </div>
+    <SearchInputArea>
+      <label htmlFor={columnName}>
+        {`${columnName}: `}
+      </label>
+      <input
+        type={columnName === 'rating' ? 'number' : 'text'}
+        placeholder="Type the search text"
+        onChange={handleChange}
+        id={columnName}
+        value={inputValue}
+      />
+    </SearchInputArea>
   );
 };
 
