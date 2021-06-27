@@ -52,7 +52,7 @@ const UserCard: FC = () => {
         </div>
         <div>
           <HeaderCell>Rating: </HeaderCell>
-          <Rating id={id} />
+          <Rating id={id} min={-4} max={4} />
         </div>
       </Grid>
     </>

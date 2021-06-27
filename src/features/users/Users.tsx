@@ -15,7 +15,7 @@ import {
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 58px repeat(4, 1fr) 180px 80px;
+  grid-template-columns: 58px repeat(5, 1fr) 80px;
   grid-gap: 1px;
   padding: 1px;
   margin: 20px 0 0;
@@ -142,7 +142,13 @@ const Users: FC = () => {
               <Cell>{user.login}</Cell>
               <Cell>{user.email}</Cell>
               <Cell>{user.phone}</Cell>
-              <Cell><Rating id={user.id} /></Cell>
+              <Cell>
+                <Rating
+                  id={user.id}
+                  min={-4}
+                  max={4}
+                />
+              </Cell>
               <Cell><Button type="button" onClick={() => handleClick(user.id)}>Delete</Button></Cell>
             </ThemeProvider>
           </Fragment>

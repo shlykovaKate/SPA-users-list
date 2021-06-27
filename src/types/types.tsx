@@ -6,6 +6,17 @@ export interface Params {
   id: string;
 }
 
+export interface RatingProp {
+  id: string;
+  max: number;
+  min: number;
+}
+
+export interface RateProp {
+  handleClick: (event: React.MouseEvent<SVGSVGElement>) => void;
+  value: string;
+}
+
 export interface UserPhotos {
   avatar: string;
   large: string;

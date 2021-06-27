@@ -14,14 +14,21 @@ describe('<Rating />', () => {
   it('should work', () => {
     const store = mockStore(initialState);
     render(
-      <Provider store={store}><Rating id="589b4db1-0318-4d0d-8880-a1e2f01a09f4" /></Provider>,
+      <Provider store={store}>
+        <Rating
+          id="589b4db1-0318-4d0d-8880-a1e2f01a09f4"
+          min={-4}
+          max={4}
+        />
+      </Provider>,
     );
-    const inputElement = screen.getByRole('spinbutton');
-    expect(inputElement).toBeTruthy();
-    expect(inputElement.getAttribute('value')).toEqual('0');
+    const starsBlock = screen.getByTestId('stars');
+    expect(starsBlock).toBeTruthy();
+    const stars = starsBlock.querySelectorAll('[data-rating]');
+    expect(stars.length).toEqual(9);
   });
 
-  it('changing the rating value', () => {
+  it('changing the rating value, when we have sorting and filter', () => {
     const rootReducer = combineReducers({ users: reducer });
     const initialStateNew: RootState = {
       ...initialState,
@@ -38,14 +45,23 @@ describe('<Rating />', () => {
       },
     };
     const store = createStore(rootReducer, initialStateNew);
-    render(<Provider store={store}><Rating id="589b4db1-0318-4d0d-8880-a1e2f01a09f4" /></Provider>);
-    const inputElement = screen.getByRole('spinbutton');
-    expect(inputElement.getAttribute('value')).toEqual('0');
-    fireEvent.change(inputElement, { target: { value: '-3' } });
-    expect(inputElement.getAttribute('value')).toEqual('-3');
+    render(
+      <Provider store={store}>
+        <Rating
+          id="589b4db1-0318-4d0d-8880-a1e2f01a09f4"
+          min={-4}
+          max={4}
+        />
+      </Provider>,
+    );
+    const starsBlock = screen.getByTestId('stars');
+    const stars = starsBlock.querySelectorAll('[data-rating]');
+    expect(starsBlock.getAttribute('data-stars')).toEqual('0');
+    fireEvent.click(stars[8]);
+    expect(starsBlock.getAttribute('data-stars')).toEqual('4');
   });
 
-  it('changing the rating value to some letters', () => {
+  it('changing the rating value, when we have sorting with columnName "rating" and rule "DSC"', () => {
     const rootReducer = combineReducers({ users: reducer });
     const initialStateNew: RootState = {
       ...initialState,
@@ -55,10 +71,19 @@ describe('<Rating />', () => {
       },
     };
     const store = createStore(rootReducer, initialStateNew);
-    render(<Provider store={store}><Rating id="589b4db1-0318-4d0d-8880-a1e2f01a09f4" /></Provider>);
-    const inputElement = screen.getByRole('spinbutton');
-    expect(inputElement.getAttribute('value')).toEqual('0');
-    fireEvent.change(inputElement, { target: { value: 'gh' } });
-    expect(inputElement.getAttribute('value')).toEqual('0');
+    render(
+      <Provider store={store}>
+        <Rating
+          id="589b4db1-0318-4d0d-8880-a1e2f01a09f4"
+          min={-4}
+          max={4}
+        />
+      </Provider>,
+    );
+    const starsBlock = screen.getByTestId('stars');
+    const stars = starsBlock.querySelectorAll('[data-rating]');
+    expect(starsBlock.getAttribute('data-stars')).toEqual('0');
+    fireEvent.click(stars[2]);
+    expect(starsBlock.getAttribute('data-stars')).toEqual('-2');
   });
 });

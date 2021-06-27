@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   selectUser,
@@ -8,14 +9,98 @@ import {
   loadFilteredUsers,
   selectSearchRatingText,
 } from '../users/usersSlice';
-import { Params } from '../../types/types';
+import { RatingProp } from '../../types/types';
+import Rate from './Rate';
 
-const Rating: FC<Params> = ({ id }: Params) => {
+const Stars = styled.div`
+  cursor: pointer;
+  display: flex;
+  margin: 0 auto;
+
+  &:hover {
+    svg polygon {
+      fill: #ffd055 !important;
+    }
+  }
+
+  &[data-stars] {
+    svg polygon {
+      fill: #ffd055;
+    }
+  }
+
+  &[data-stars="-4"] {
+    svg:nth-child(1) ~ svg polygon {
+      fill: #d8d8d8;
+    }
+  }
+
+  &[data-stars="-3"] {
+    svg:nth-child(2) ~ svg polygon {
+      fill: #d8d8d8;
+    }
+  }
+
+  &[data-stars="-2"] {
+    svg:nth-child(3) ~ svg polygon {
+      fill: #d8d8d8;
+    }
+  }
+
+  &[data-stars="-1"] {
+    svg:nth-child(4) ~ svg polygon {
+      fill: #d8d8d8;
+    }
+  }
+
+  &[data-stars="0"] {
+    svg:nth-child(5) ~ svg polygon {
+      fill: #d8d8d8;
+    }
+  }
+
+  &[data-stars="1"] {
+    svg:nth-child(6) ~ svg polygon {
+      fill: #d8d8d8;
+    }
+  }
+
+  &[data-stars="2"] {
+    svg:nth-child(7) ~ svg polygon {
+      fill: #d8d8d8;
+    }
+  }
+
+  &[data-stars="3"] {
+    svg:nth-child(8) ~ svg polygon {
+      fill: #d8d8d8;
+    }
+  }
+
+  &[data-stars="4"] {
+    svg:nth-child(9) ~ svg polygon {
+      fill: #d8d8d8;
+    }
+  }
+
+  svg:hover ~ svg {
+    polygon {
+      fill: #d8d8d8 !important;
+    }
+  }
+`;
+
+const Rating: FC<RatingProp> = ({ id, max, min }: RatingProp) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => selectUser(state, id));
   const filteredUsers = useAppSelector(selectFilteredUsers);
   const sorting = useAppSelector(selectSorting);
   const searchRatingText = useAppSelector(selectSearchRatingText);
+  const range = [];
+
+  for (let i = min; i <= max; i += 1) {
+    range.push(i);
+  }
 
   useEffect(() => {
     let sortedUsers = filteredUsers;
@@ -49,20 +134,22 @@ const Rating: FC<Params> = ({ id }: Params) => {
     }
   }, [user]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value) {
-      dispatch(changeUserRating({ id, rating: event.target.value }));
-    }
+  const handleClick = (event: React.MouseEvent<SVGSVGElement>) => {
+    const starElement = event.currentTarget;
+    starElement.parentElement.setAttribute('data-stars', starElement.dataset.rating);
+    dispatch(changeUserRating({ id, rating: starElement.dataset.rating }));
   };
 
   return (
-    <input
-      type="number"
-      defaultValue={user.rating}
-      max="5"
-      min="-5"
-      onChange={handleChange}
-    />
+    <Stars data-stars={user.rating} data-testid="stars">
+      {range.map((item) => (
+        <Rate
+          key={item}
+          value={String(item)}
+          handleClick={handleClick}
+        />
+      ))}
+    </Stars>
   );
 };
 
