@@ -15,7 +15,9 @@
   },
   "homepage": "https://github.com/shlykovaKate/SPA-users-list#readme",
   "scripts": {
-    "test": "jest",
+    "cy:open": "cypress open",
+    "test:jest": "jest",
+    "test:cy": "cypress run",
     "prod": "npm run build && serve -s dist",
     "start": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
@@ -28,6 +30,7 @@
     "@babel/preset-env": "^7.14.4",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.13.0",
+    "@cypress/code-coverage": "^3.9.7",
     "@testing-library/dom": "^7.31.2",
     "@testing-library/react": "^11.2.7",
     "@types/jest": "^26.0.23",
@@ -41,8 +44,10 @@
     "@typescript-eslint/parser": "^4.26.0",
     "babel-jest": "^27.0.2",
     "babel-loader": "^8.2.2",
+    "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-styled-components": "^1.12.0",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "cypress": "^7.6.0",
     "eslint": "^7.27.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-plugin-import": "^2.23.4",
@@ -73,5 +78,8 @@
     "react-router-dom": "^5.2.0",
     "serve": "^12.0.0",
     "styled-components": "^5.3.0"
+  },
+  "nyc": {
+    "report-dir": "cypress-coverage"
   }
 }
