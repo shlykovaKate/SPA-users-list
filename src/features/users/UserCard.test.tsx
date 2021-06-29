@@ -40,9 +40,10 @@ describe('<UserCard />', () => {
         </MemoryRouter>
       </Provider>,
     );
-    const inputElement = screen.getByRole('spinbutton');
-    expect(inputElement.getAttribute('value')).toEqual('0');
-    fireEvent.change(inputElement, { target: { value: '3' } });
-    expect(inputElement.getAttribute('value')).toEqual('3');
+    const starsBlock = screen.getByTestId('stars');
+    const stars = starsBlock.querySelectorAll('[data-rating]');
+    expect(starsBlock.getAttribute('data-stars')).toEqual('0');
+    fireEvent.click(stars[7]);
+    expect(starsBlock.getAttribute('data-stars')).toEqual('3');
   });
 });
