@@ -50,9 +50,9 @@ export const usersSlice = createSlice({
     },
     changeUserRating: (state, action: PayloadAction<{ id: string; rating: string; }>) => {
       state.users
-        .find((user) => user.id === action.payload.id).rating = action.payload.rating;
+        .find((user) => user.id === action.payload.id)!.rating = action.payload.rating;
       state.filteredUsers
-        .find((user) => user.id === action.payload.id).rating = action.payload.rating;
+        .find((user) => user.id === action.payload.id)!.rating = action.payload.rating;
     },
     removeUser: (state, action: PayloadAction<string>) => {
       state.users = state.users.filter((user) => user.id !== action.payload);
@@ -101,8 +101,8 @@ export const {
 
 export const selectUsers: UsersList = (state) => state.users.users;
 export const selectFilteredUsers: UsersList = (state) => state.users.filteredUsers;
-export const selectUser: (state:RootState, id:string) => User = (state, id) => (
-  state.users.users.find((user:User) => user.id === id)
+export const selectUser: (state: RootState, id: string) => User = (state, id) => (
+  state.users.users.find((user) => user.id === id)!
 );
 export const selectSearchText: (state: RootState) => SearchText = (state) => state.users.searchText;
 export const selectSearchNameText: (state: RootState) => string = (state) => (
