@@ -1,4 +1,9 @@
 node_modules
 .vscode
 dist
-coverage
+jest-coverage
+.nyc_output
+cypress-coverage
+cypress/videos
+cypress/screenshots
+cypress/fixtures
