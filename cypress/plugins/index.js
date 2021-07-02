@@ -24,9 +24,5 @@ module.exports = (on, config) => {
 
   // It's IMPORTANT to return the config object
   // with any changed environment variables
-  on(
-    'file:preprocessor',
-    require('@cypress/code-coverage/use-browserify-istanbul')
-  )
   return config
 }

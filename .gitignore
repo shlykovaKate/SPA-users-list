@@ -3,5 +3,7 @@ node_modules
 dist
 jest-coverage
 .nyc_output
-cypress-coverage/
+cypress-coverage
 cypress/videos
+cypress/screenshots
+cypress/fixtures
