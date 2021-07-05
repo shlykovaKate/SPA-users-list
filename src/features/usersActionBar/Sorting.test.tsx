@@ -41,7 +41,7 @@ describe('<Sorting />', () => {
     );
     const selectElement = screen.getByRole('combobox');
     fireEvent.change(selectElement, { target: { value: 'DSC' } });
-    expect(document.querySelector('select').value).toEqual('DSC');
+    expect(document.querySelector('select')!.value).toEqual('DSC');
   });
 
   it(`changing the sorting rule to 'ASC' for name column,
