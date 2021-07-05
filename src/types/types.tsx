@@ -8,7 +8,7 @@ export interface Params {
 
 export interface RateProps {
   handleClick: (event: React.MouseEvent<SVGSVGElement>) => void;
-  value: string;
+  value: number;
 }
 
 export interface UserPhotos {
@@ -23,7 +23,7 @@ export interface User {
   login: string;
   email: string;
   phone: string;
-  rating: string;
+  rating: number;
 }
 
 export interface SearchText {
@@ -48,5 +48,5 @@ export interface SortItem {
 
 export interface Sorting {
   columnName: string;
-  rule: 'ASC' | 'DSC' | ''
+  rule: 'ASC' | 'DSC' | string
 }

@@ -36,7 +36,6 @@ const HeaderCell = styled.div`
 
 const Img = styled.div`
   justify-content: center;
-  background-color: ${(props) => props.theme.main};
 
   img {
     border-radius: 50%;

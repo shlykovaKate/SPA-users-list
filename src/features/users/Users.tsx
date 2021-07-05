@@ -136,11 +136,11 @@ const Users: FC = () => {
         <HeaderCell>&nbsp;</HeaderCell>
         {users.map((user) => (
           <Fragment key={user.id}>
-            <ThemeProvider theme={Number(user.rating) < -3 ? smallRating : normalRating}>
+            <ThemeProvider theme={user.rating < -3 ? smallRating : normalRating}>
               <Img><img src={user.picture.avatar} alt={user.name} /></Img>
               <Cell><Link to={`/users/${user.id}`}>{user.name}</Link></Cell>
               <Cell>{user.login}</Cell>
-              <Cell>{user.email}</Cell>
+              <Cell data-cell="email">{user.email}</Cell>
               <Cell>{user.phone}</Cell>
               <Cell>
                 <Rating

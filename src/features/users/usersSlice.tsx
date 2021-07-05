@@ -48,7 +48,7 @@ export const usersSlice = createSlice({
     loadFilteredUsers: (state, action: PayloadAction<User[]>) => {
       state.filteredUsers = action.payload;
     },
-    changeUserRating: (state, action: PayloadAction<{ id: string; rating: string; }>) => {
+    changeUserRating: (state, action: PayloadAction<{ id: string; rating: number; }>) => {
       state.users
         .find((user) => user.id === action.payload.id)!.rating = action.payload.rating;
       state.filteredUsers
@@ -81,7 +81,7 @@ export const usersSlice = createSlice({
           login: username,
           email,
           phone,
-          rating: '0',
+          rating: 0,
         }));
 
         state.status = 'idle';
