@@ -30,6 +30,8 @@ describe('The Users Page', () => {
       .parent()
       .next()
       .find('a').click();
+    cy.get('div[data-testid]')
+      .should('have.attr', 'data-testid','user-card')
   });
 
   it('successfully deletes user', () => {
@@ -98,7 +100,19 @@ describe('The Users Page', () => {
 
   it('successfully searches users using name filter', () => {
     cy.get('a').contains('Users').click();
-    cy.get('input[id="name"]').type('ll');
+    const arrOfNames = [];
+    const sortedArrOfNames = [];
+    const value = 'er';
+    cy.get('div[data-testid="grid-element"]')
+      .find('a')
+      .each(($element) => arrOfNames.push($element.text()));
+    cy.get('input[id="name"]').type(value);
+    cy.get('div[data-testid="grid-element"]')
+      .find('a')
+      .each(($element) => sortedArrOfNames.push($element.text()));
+    cy.wrap(arrOfNames)
+      .then(() => arrOfNames.filter((name) => name.toLowerCase().indexOf(value) !== -1))
+      .should("deep.equal", sortedArrOfNames);
   });
 
   it('successfully searches users using name filter, when we type some spaces', () => {
@@ -117,14 +131,16 @@ describe('The Users Page', () => {
     const sortedArrOfNames = [];
     cy.get('div[data-testid="grid-element"]')
       .find('a')
-      .then(($elements) => arrOfNames.push($elements.text()));
+      .each(($element) => arrOfNames.push($element.text()));
     cy.get('select')
       .first()
       .select('ASC')
     cy.get('div[data-testid="grid-element"]')
       .find('a')
-      .then(($elements) => sortedArrOfNames.push($elements.text()));
-    expect(arrOfNames.sort()).to.deep.equal(sortedArrOfNames);
+      .each(($element) => sortedArrOfNames.push($element.text()));
+    cy.wrap(arrOfNames)
+      .then(() => arrOfNames.sort())
+      .should("deep.equal", sortedArrOfNames);
   });
 
   it('successfully sorts emails of the users by DSC', () => {
@@ -133,20 +149,24 @@ describe('The Users Page', () => {
     const sortedArrOfEmails = [];
     cy.get('div[data-testid="grid-element"]')
       .find('div[data-cell="email"]')
-      .then(($elements) => arrOfEmails.push($elements.text()));
+      .each(($element) => arrOfEmails.push($element.text()));
     cy.get('select')
       .eq(2)
       .select('DSC');
     cy.get('div[data-testid="grid-element"]')
       .find('div[data-cell="email"]')
-      .then(($elements) => sortedArrOfEmails.push($elements.text()));
-    expect(arrOfEmails.sort().reverse()).to.deep.equal(sortedArrOfEmails);
+      .each(($element) => sortedArrOfEmails.push($element.text()));
+    cy.wrap(arrOfEmails)
+      .then(() => arrOfEmails.sort().reverse())
+      .should("deep.equal", sortedArrOfEmails);
   });
 
-  it('successfully sorts rates of the users by ASC', () => {
-    cy.get('a').contains('Users').click()
+  it('successfully sorts rates of the users by DSC', () => {
+    cy.get('a').contains('Users').click();
+    const arrOfRates = [];
+    const sortedArrOfRates = [];
     cy.get('select:last')
-      .select('ASC')
+      .select('ASC');
     cy.get('div[data-testid="stars"]:first')
       .find('svg:last')
       .click();
@@ -158,10 +178,23 @@ describe('The Users Page', () => {
       .eq(7)
       .find('svg:first')
       .click();
+    cy.get('div[data-testid="grid-element"]')
+      .find('div[data-testid="stars"]')
+      .each(($element) => arrOfRates.push(Number($element.attr('data-stars'))));
+    cy.get('select:last')
+      .select('DSC');
+    cy.get('div[data-testid="grid-element"]')
+      .find('div[data-testid="stars"]')
+      .each(($element) => sortedArrOfRates.push(Number($element.attr('data-stars'))));
+    cy.wrap(arrOfRates)
+      .then(() => arrOfRates.reverse())
+      .should("deep.equal", sortedArrOfRates);
   });
 
-  it('successfully sorts rates of the users by DSC', () => {
+  it('successfully sorts rates of the users by ASC', () => {
     cy.get('a').contains('Users').click();
+    const arrOfRates = [];
+    const sortedArrOfRates = [];
     cy.get('select')
       .last()
       .select('DSC');
@@ -177,5 +210,16 @@ describe('The Users Page', () => {
       .find('svg')
       .eq(8)
       .click();
+    cy.get('div[data-testid="grid-element"]')
+      .find('div[data-testid="stars"]')
+      .each(($element) => arrOfRates.push(Number($element.attr('data-stars'))));
+    cy.get('select:last')
+      .select('ASC');
+    cy.get('div[data-testid="grid-element"]')
+      .find('div[data-testid="stars"]')
+      .each(($element) => sortedArrOfRates.push(Number($element.attr('data-stars'))));
+    cy.wrap(arrOfRates)
+      .then(() => arrOfRates.reverse())
+      .should("deep.equal", sortedArrOfRates);
   });
 })
