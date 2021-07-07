@@ -60,7 +60,7 @@ const SearchInput: FC<SortItem> = ({ columnName }: SortItem) => {
     if (value) {
       const filteredUsers = users.filter((user) => {
         if (columnName === 'rating') {
-          return user[columnName] === value;
+          return user[columnName] === Number(value);
         }
         return (user[columnName] as string).toLowerCase().indexOf(value) !== -1;
       });

@@ -5,13 +5,13 @@ describe('usersSlice', () => {
   it('should work the changeUserRating reducer', () => {
     const expectedState = [{
       ...initialState.users.users.filter((user) => user.id === '2d049a1e-4935-4114-88b1-085aee6f6699')[0],
-      rating: '3',
+      rating: 3,
     }];
     const newState = reducer(initialState.users, {
       type: 'users/changeUserRating',
       payload: {
         id: '2d049a1e-4935-4114-88b1-085aee6f6699',
-        rating: '3',
+        rating: 3,
       },
     });
     expect(newState.users.filter((user) => user.id === '2d049a1e-4935-4114-88b1-085aee6f6699')).toEqual(expectedState);
@@ -94,7 +94,7 @@ describe('usersSlice', () => {
             avatar: 'https://randomuser.me/api/portraits/thumb/women/15.jpg',
             large: 'https://randomuser.me/api/portraits/women/15.jpg',
           },
-          rating: '0',
+          rating: 0,
         },
       ],
       filteredUsers: [
@@ -108,7 +108,7 @@ describe('usersSlice', () => {
             avatar: 'https://randomuser.me/api/portraits/thumb/women/15.jpg',
             large: 'https://randomuser.me/api/portraits/women/15.jpg',
           },
-          rating: '0',
+          rating: 0,
         },
       ],
     };

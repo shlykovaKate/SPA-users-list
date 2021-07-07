@@ -84,7 +84,7 @@ const Rating: FC<RatingProps> = ({ id, max, min }: RatingProps) => {
 
     if (searchRatingText) {
       const newFilteredUsers = sortedUsers.filter((item) => (
-        item.rating === searchRatingText
+        item.rating === Number(searchRatingText)
       ));
       dispatch(loadFilteredUsers(newFilteredUsers));
     } else {
@@ -95,7 +95,7 @@ const Rating: FC<RatingProps> = ({ id, max, min }: RatingProps) => {
   const handleClick:RateProps['handleClick'] = (event) => {
     const starElement = event.currentTarget;
     starElement.parentElement!.setAttribute('data-stars', starElement.dataset.rating!);
-    dispatch(changeUserRating({ id, rating: starElement.dataset.rating! }));
+    dispatch(changeUserRating({ id, rating: Number(starElement.dataset.rating)! }));
   };
 
   return (
