@@ -48,5 +48,5 @@ export interface SortItem {
 
 export interface Sorting {
   columnName: string;
-  rule: 'ASC' | 'DSC' | string
+  rule: 'ASC' | 'DSC' | ''
 }
