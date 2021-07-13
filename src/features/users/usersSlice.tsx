@@ -19,9 +19,8 @@ const initialState: UsersState = {
     phone: '',
     rating: '',
   },
-  filteredUsers: [],
   sorting: {
-    columnName: '',
+    columnName: 'name',
     rule: '',
   },
 };
@@ -45,18 +44,12 @@ export const usersSlice = createSlice({
     addSorting: (state, action: PayloadAction<Sorting>) => {
       state.sorting = action.payload;
     },
-    loadFilteredUsers: (state, action: PayloadAction<User[]>) => {
-      state.filteredUsers = action.payload;
-    },
     changeUserRating: (state, action: PayloadAction<{ id: string; rating: number; }>) => {
       state.users
-        .find((user) => user.id === action.payload.id)!.rating = action.payload.rating;
-      state.filteredUsers
         .find((user) => user.id === action.payload.id)!.rating = action.payload.rating;
     },
     removeUser: (state, action: PayloadAction<string>) => {
       state.users = state.users.filter((user) => user.id !== action.payload);
-      state.filteredUsers = state.filteredUsers.filter((user) => user.id !== action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -86,21 +79,18 @@ export const usersSlice = createSlice({
 
         state.status = 'idle';
         state.users = users;
-        state.filteredUsers = users;
       });
   },
 });
 
 export const {
   addSearchText,
-  loadFilteredUsers,
   changeUserRating,
   addSorting,
   removeUser,
 } = usersSlice.actions;
 
 export const selectUsers: UsersList = (state) => state.users.users;
-export const selectFilteredUsers: UsersList = (state) => state.users.filteredUsers;
 export const selectUser: (state: RootState, id: string) => User = (state, id) => (
   state.users.users.find((user) => user.id === id)!
 );

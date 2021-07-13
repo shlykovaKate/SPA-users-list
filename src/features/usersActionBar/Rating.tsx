@@ -1,13 +1,9 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   selectUser,
   changeUserRating,
-  selectFilteredUsers,
-  selectSorting,
-  loadFilteredUsers,
-  selectSearchRatingText,
 } from '../users/usersSlice';
 import { RateProps } from '../../types/types';
 import Rate from './Rate';
@@ -51,46 +47,11 @@ const Stars = styled.div`
 const Rating: FC<RatingProps> = ({ id, max, min }: RatingProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => selectUser(state, id));
-  const filteredUsers = useAppSelector(selectFilteredUsers);
-  const sorting = useAppSelector(selectSorting);
-  const searchRatingText = useAppSelector(selectSearchRatingText);
   const range = [];
 
   for (let i = min; i <= max; i += 1) {
     range.push(i);
   }
-
-  useEffect(() => {
-    let sortedUsers = filteredUsers;
-    if (sorting.columnName === 'rating') {
-      switch (sorting.rule) {
-        case 'ASC': {
-          sortedUsers = filteredUsers.slice().sort((a, b) => (
-            a.rating > b.rating ? 1 : -1
-          ));
-          dispatch(loadFilteredUsers(sortedUsers));
-          break;
-        }
-        case 'DSC': {
-          sortedUsers = filteredUsers.slice().sort((a, b) => (
-            a.rating < b.rating ? 1 : -1
-          ));
-          dispatch(loadFilteredUsers(sortedUsers));
-          break;
-        }
-        default:
-      }
-    }
-
-    if (searchRatingText) {
-      const newFilteredUsers = sortedUsers.filter((item) => (
-        item.rating === Number(searchRatingText)
-      ));
-      dispatch(loadFilteredUsers(newFilteredUsers));
-    } else {
-      dispatch(loadFilteredUsers(sortedUsers));
-    }
-  }, [user]);
 
   const handleClick:RateProps['handleClick'] = (event) => {
     const starElement = event.currentTarget;

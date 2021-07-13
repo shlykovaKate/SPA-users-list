@@ -38,7 +38,6 @@ export interface UsersState {
   users: User[];
   status: 'idle' | 'loading' | 'failed';
   searchText: SearchText;
-  filteredUsers: User[];
   sorting: Sorting
 }
 
@@ -47,6 +46,6 @@ export interface SortItem {
 }
 
 export interface Sorting {
-  columnName: string;
+  columnName: keyof User;
   rule: 'ASC' | 'DSC' | ''
 }

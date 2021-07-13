@@ -9,9 +9,12 @@ import SearchInput from '../usersActionBar/SearchInput';
 import Sorting from '../usersActionBar/Sorting';
 import Rating from '../usersActionBar/Rating';
 import {
-  selectFilteredUsers,
   removeUser,
+  selectSorting,
+  selectUsers,
+  selectSearchText,
 } from './usersSlice';
+import { SearchText, Sorting as SortParams, User } from '../../types/types';
 
 const Grid = styled.div`
   display: grid;
@@ -85,7 +88,44 @@ const FilterItemsBlock = styled.div`
 
 const Users: FC = () => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(selectFilteredUsers);
+  const allUsers = useAppSelector(selectUsers);
+  const sorting = useAppSelector(selectSorting);
+  const searchText = useAppSelector(selectSearchText);
+
+  const sortUsers = (users: User[], sortParams: SortParams) => {
+    switch (sortParams.rule) {
+      case 'ASC':
+        return users.slice().sort((a, b) => {
+          if (a[sortParams.columnName] === b[sortParams.columnName]) return 0;
+          return a[sortParams.columnName] > b[sortParams.columnName] ? 1 : -1;
+        });
+      case 'DSC':
+        return users.slice().sort((a, b) => {
+          if (a[sortParams.columnName] === b[sortParams.columnName]) return 0;
+          return a[sortParams.columnName] < b[sortParams.columnName] ? 1 : -1;
+        });
+      default: return users;
+    }
+  };
+
+  const searchUsers = (users: User[], texts: SearchText) => {
+    const arr = Object.keys(texts).map((item) => item as keyof SearchText);
+
+    return arr.reduce((result, columnName) => {
+      if (searchText[columnName]) {
+        return result.filter((user) => {
+          if (columnName === 'rating') {
+            return user[columnName] === Number(searchText[columnName]);
+          }
+          return user[columnName].toLowerCase().indexOf(searchText[columnName]) !== -1;
+        });
+      }
+      return result;
+    }, users);
+  };
+
+  const sortedUsers = sortUsers(allUsers, sorting);
+  const searchedUsers = searchUsers(sortedUsers, searchText);
 
   const handleClick = (id: string) => {
     dispatch(removeUser(id));
@@ -134,7 +174,7 @@ const Users: FC = () => {
           <Sorting columnName="rating" />
         </HeaderCell>
         <HeaderCell>&nbsp;</HeaderCell>
-        {users.map((user) => (
+        {searchedUsers.map((user) => (
           <Fragment key={user.id}>
             <ThemeProvider theme={user.rating < -3 ? smallRating : normalRating}>
               <Img><img src={user.picture.avatar} alt={user.name} /></Img>
