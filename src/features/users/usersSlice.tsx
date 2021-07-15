@@ -41,7 +41,7 @@ export const usersSlice = createSlice({
     addSearchText: (state, action: PayloadAction<SearchText>) => {
       state.searchText = action.payload;
     },
-    addSorting: (state, action: PayloadAction<Sorting>) => {
+    addSorting: (state, action: PayloadAction<Sorting<User>>) => {
       state.sorting = action.payload;
     },
     changeUserRating: (state, action: PayloadAction<{ id: string; rating: number; }>) => {
@@ -110,6 +110,6 @@ export const selectSearchPhoneText: (state: RootState) => string = (state) => (
 export const selectSearchRatingText: (state: RootState) => string = (state) => (
   state.users.searchText.rating
 );
-export const selectSorting: (state: RootState) => Sorting = (state) => state.users.sorting;
+export const selectSorting: (state: RootState) => Sorting<User> = (state) => state.users.sorting;
 
 export default usersSlice.reducer;

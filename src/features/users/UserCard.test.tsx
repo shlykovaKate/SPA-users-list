@@ -5,7 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { createStore, combineReducers } from '@reduxjs/toolkit';
 import UserCard from './UserCard';
-import { initialState } from '../../__mock__/mockedStore';
+import initialState from '../../__mock__/mockedStore';
 import reducer from './usersSlice';
 
 const mockStore = configureMockStore();

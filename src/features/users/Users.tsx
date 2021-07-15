@@ -14,7 +14,8 @@ import {
   selectUsers,
   selectSearchText,
 } from './usersSlice';
-import { SearchText, Sorting as SortParams, User } from '../../types/types';
+import { SearchText, User } from '../../types/types';
+import sortBy from '../../utils/sortBy';
 
 const Grid = styled.div`
   display: grid;
@@ -92,22 +93,6 @@ const Users: FC = () => {
   const sorting = useAppSelector(selectSorting);
   const searchText = useAppSelector(selectSearchText);
 
-  const sortUsers = (users: User[], sortParams: SortParams) => {
-    switch (sortParams.rule) {
-      case 'ASC':
-        return users.slice().sort((a, b) => {
-          if (a[sortParams.columnName] === b[sortParams.columnName]) return 0;
-          return a[sortParams.columnName] > b[sortParams.columnName] ? 1 : -1;
-        });
-      case 'DSC':
-        return users.slice().sort((a, b) => {
-          if (a[sortParams.columnName] === b[sortParams.columnName]) return 0;
-          return a[sortParams.columnName] < b[sortParams.columnName] ? 1 : -1;
-        });
-      default: return users;
-    }
-  };
-
   const searchUsers = (users: User[], texts: SearchText) => {
     const arr = Object.keys(texts).map((item) => item as keyof SearchText);
 
@@ -124,7 +109,7 @@ const Users: FC = () => {
     }, users);
   };
 
-  const sortedUsers = sortUsers(allUsers, sorting);
+  const sortedUsers = sorting.rule !== '' ? sortBy(allUsers, sorting) : allUsers;
   const searchedUsers = searchUsers(sortedUsers, searchText);
 
   const handleClick = (id: string) => {

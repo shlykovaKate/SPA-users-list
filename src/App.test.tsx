@@ -19,9 +19,8 @@ const initialState: UsersState = {
     phone: '',
     rating: '',
   },
-  filteredUsers: [],
   sorting: {
-    columnName: '',
+    columnName: 'name',
     rule: '',
   },
 };

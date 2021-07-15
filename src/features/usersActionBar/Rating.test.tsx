@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { createStore, combineReducers } from '@reduxjs/toolkit';
 import Rating from './Rating';
-import { initialState } from '../../__mock__/mockedStore';
+import initialState from '../../__mock__/mockedStore';
 import reducer from '../users/usersSlice';
 import { RootState } from '../../app/store';
 
@@ -61,13 +61,13 @@ describe('<Rating />', () => {
     expect(starsBlock.getAttribute('data-stars')).toEqual('4');
   });
 
-  it('changing the rating value, when we have sorting with columnName "rating" and rule "DSC"', () => {
+  it('changing the rating value, when we have sorting with columnName "rating" and rule "DESC"', () => {
     const rootReducer = combineReducers({ users: reducer });
     const initialStateNew: RootState = {
       ...initialState,
       users: {
         ...initialState.users,
-        sorting: { rule: 'DSC', columnName: 'rating' },
+        sorting: { rule: 'DESC', columnName: 'rating' },
       },
     };
     const store = createStore(rootReducer, initialStateNew);

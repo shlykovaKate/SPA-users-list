@@ -2,6 +2,8 @@ import type { RootState } from '../app/store';
 
 export type UsersList = (state: RootState) => User[];
 
+export type SortBy = <T>(list: T[], { rule, columnName }: Sorting<T>) => T[];
+
 export interface Params {
   id: string;
 }
@@ -38,14 +40,14 @@ export interface UsersState {
   users: User[];
   status: 'idle' | 'loading' | 'failed';
   searchText: SearchText;
-  sorting: Sorting
+  sorting: Sorting<User>
 }
 
 export interface SortItem {
   columnName: keyof User;
 }
 
-export interface Sorting {
-  columnName: keyof User;
-  rule: 'ASC' | 'DSC' | ''
+export interface Sorting<T> {
+  columnName: keyof T;
+  rule: 'ASC' | 'DESC' | '';
 }

@@ -143,7 +143,7 @@ describe('The Users Page', () => {
       .should("deep.equal", sortedArrOfNames);
   });
 
-  it('successfully sorts emails of the users by DSC', () => {
+  it('successfully sorts emails of the users by DESC', () => {
     cy.get('a').contains('Users').click();
     const arrOfEmails = [];
     const sortedArrOfEmails = [];
@@ -152,7 +152,7 @@ describe('The Users Page', () => {
       .each(($element) => arrOfEmails.push($element.text()));
     cy.get('select')
       .eq(2)
-      .select('DSC');
+      .select('DESC');
     cy.get('div[data-testid="grid-element"]')
       .find('div[data-cell="email"]')
       .each(($element) => sortedArrOfEmails.push($element.text()));
@@ -161,7 +161,7 @@ describe('The Users Page', () => {
       .should("deep.equal", sortedArrOfEmails);
   });
 
-  it('successfully sorts rates of the users by DSC', () => {
+  it('successfully sorts rates of the users by DESC', () => {
     cy.get('a').contains('Users').click();
     const arrOfRates = [];
     const sortedArrOfRates = [];
@@ -182,7 +182,7 @@ describe('The Users Page', () => {
       .find('div[data-testid="stars"]')
       .each(($element) => arrOfRates.push(Number($element.attr('data-stars'))));
     cy.get('select:last')
-      .select('DSC');
+      .select('DESC');
     cy.get('div[data-testid="grid-element"]')
       .find('div[data-testid="stars"]')
       .each(($element) => sortedArrOfRates.push(Number($element.attr('data-stars'))));
@@ -197,7 +197,7 @@ describe('The Users Page', () => {
     const sortedArrOfRates = [];
     cy.get('select')
       .last()
-      .select('DSC');
+      .select('DESC');
     cy.get('div[data-testid="stars"]:first')
       .find('svg:first')
       .click();

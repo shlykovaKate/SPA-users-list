@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { createStore, combineReducers } from '@reduxjs/toolkit';
 import SearchInput from './SearchInput';
-import { initialState } from '../../__mock__/mockedStore';
+import initialState from '../../__mock__/mockedStore';
 import reducer from '../users/usersSlice';
 
 const mockStore = configureMockStore();
