@@ -5,8 +5,7 @@ import {
   selectUser,
   changeUserRating,
 } from '../users/usersSlice';
-import { RateProps } from '../../types/types';
-import Rate from './Rate';
+import Rate, { RateProps } from './Rate';
 
 interface RatingProps {
   id: string;
@@ -53,7 +52,7 @@ const Rating: FC<RatingProps> = ({ id, max, min }: RatingProps) => {
     range.push(i);
   }
 
-  const handleClick:RateProps['handleClick'] = (event) => {
+  const handleClick: RateProps['handleClick'] = (event) => {
     const starElement = event.currentTarget;
     starElement.parentElement!.setAttribute('data-stars', starElement.dataset.rating!);
     dispatch(changeUserRating({ id, rating: Number(starElement.dataset.rating)! }));

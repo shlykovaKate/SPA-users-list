@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-interface RateProps {
+export interface RateProps {
   handleClick: (event: React.MouseEvent<SVGSVGElement>) => void;
   value: string;
 }

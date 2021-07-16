@@ -2,9 +2,12 @@ import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAppSelector } from '../../app/hooks';
-import { Params } from '../../types/types';
 import { selectUser } from './usersSlice';
 import Rating from '../usersActionBar/Rating';
+
+interface Params {
+  id: string;
+}
 
 const IMG = styled.img`
   margin: 40px auto 50px;

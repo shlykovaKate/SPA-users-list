@@ -9,14 +9,14 @@ import {
   selectSearchRatingText,
   addSearchText,
   selectSearchText,
+  UsersState,
 } from '../users/usersSlice';
-import { SortItem } from '../../types/types';
 
 const SearchInputArea = styled.div`
   padding: 10px;
 `;
 
-const SearchInput: FC<SortItem> = ({ columnName }: SortItem) => {
+const SearchInput: FC<UsersState['sorting']> = ({ columnName }: UsersState['sorting']) => {
   const dispatch = useAppDispatch();
   const searchText = useAppSelector(selectSearchText);
   let inputValue;

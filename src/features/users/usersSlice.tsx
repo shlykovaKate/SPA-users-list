@@ -1,13 +1,35 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 import fetchUsers from './usersAPI';
-import {
-  UsersState,
-  User,
-  UsersList,
-  Sorting,
-  SearchText,
-} from '../../types/types';
+import { SortParams } from '../../utils/sortBy';
+
+export interface User {
+  id: string;
+  picture: {
+    avatar: string;
+    large: string;
+  };
+  name: string;
+  login: string;
+  email: string;
+  phone: string;
+  rating: number;
+}
+
+export interface UsersState {
+  users: User[];
+  status: 'idle' | 'loading' | 'failed';
+  searchText: {
+    name: string;
+    login: string;
+    email: string;
+    phone: string;
+    rating: string;
+  };
+  sorting: SortParams<User>
+}
+
+type UsersList = (state: RootState) => User[];
 
 const initialState: UsersState = {
   users: [],
@@ -21,7 +43,6 @@ const initialState: UsersState = {
   },
   sorting: {
     columnName: 'name',
-    rule: '',
   },
 };
 
@@ -38,10 +59,10 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    addSearchText: (state, action: PayloadAction<SearchText>) => {
+    addSearchText: (state, action: PayloadAction<UsersState['searchText']>) => {
       state.searchText = action.payload;
     },
-    addSorting: (state, action: PayloadAction<Sorting<User>>) => {
+    addSorting: (state, action: PayloadAction<UsersState['sorting']>) => {
       state.sorting = action.payload;
     },
     changeUserRating: (state, action: PayloadAction<{ id: string; rating: number; }>) => {
@@ -94,7 +115,7 @@ export const selectUsers: UsersList = (state) => state.users.users;
 export const selectUser: (state: RootState, id: string) => User = (state, id) => (
   state.users.users.find((user) => user.id === id)!
 );
-export const selectSearchText: (state: RootState) => SearchText = (state) => state.users.searchText;
+export const selectSearchText: (state: RootState) => UsersState['searchText'] = (state) => state.users.searchText;
 export const selectSearchNameText: (state: RootState) => string = (state) => (
   state.users.searchText.name
 );
@@ -110,6 +131,6 @@ export const selectSearchPhoneText: (state: RootState) => string = (state) => (
 export const selectSearchRatingText: (state: RootState) => string = (state) => (
   state.users.searchText.rating
 );
-export const selectSorting: (state: RootState) => Sorting<User> = (state) => state.users.sorting;
+export const selectSorting: (state: RootState) => UsersState['sorting'] = (state) => state.users.sorting;
 
 export default usersSlice.reducer;

@@ -1,4 +1,9 @@
-import { SortBy } from '../types/types';
+export interface SortParams<T> {
+  columnName: keyof T;
+  rule?: 'ASC' | 'DESC';
+}
+
+type SortBy = <T>(list: T[], { rule, columnName }: SortParams<T>) => T[];
 
 const sortBy: SortBy = (list, { rule, columnName }) => (
   list.slice().sort((a, b) => (

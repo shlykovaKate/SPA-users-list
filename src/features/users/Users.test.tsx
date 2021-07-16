@@ -13,8 +13,7 @@ import { Router } from 'react-router-dom';
 import { createStore, combineReducers } from '@reduxjs/toolkit';
 import Users from './Users';
 import initialState from '../../__mock__/mockedStore';
-import reducer from './usersSlice';
-import { UsersState } from '../../types/types';
+import reducer, { UsersState } from './usersSlice';
 
 const mockStore = configureMockStore();
 

@@ -1,4 +1,4 @@
-import { UsersState } from '../types/types';
+import { UsersState } from '../features/users/usersSlice';
 
 const initialState = {
   users: {
@@ -86,7 +86,6 @@ const initialState = {
     },
     sorting: {
       columnName: 'name',
-      rule: '',
     },
   } as UsersState,
 };

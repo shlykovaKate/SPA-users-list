@@ -13,8 +13,9 @@ import {
   selectSorting,
   selectUsers,
   selectSearchText,
+  User,
+  UsersState,
 } from './usersSlice';
-import { SearchText, User } from '../../types/types';
 import sortBy from '../../utils/sortBy';
 
 const Grid = styled.div`
@@ -93,8 +94,8 @@ const Users: FC = () => {
   const sorting = useAppSelector(selectSorting);
   const searchText = useAppSelector(selectSearchText);
 
-  const searchUsers = (users: User[], texts: SearchText) => {
-    const arr = Object.keys(texts).map((item) => item as keyof SearchText);
+  const searchUsers = (users: User[], texts: UsersState['searchText']) => {
+    const arr = Object.keys(texts).map((item) => item as keyof UsersState['searchText']);
 
     return arr.reduce((result, columnName) => {
       if (searchText[columnName]) {
@@ -109,7 +110,7 @@ const Users: FC = () => {
     }, users);
   };
 
-  const sortedUsers = sorting.rule !== '' ? sortBy(allUsers, sorting) : allUsers;
+  const sortedUsers = sorting.rule ? sortBy(allUsers, sorting) : allUsers;
   const searchedUsers = searchUsers(sortedUsers, searchText);
 
   const handleClick = (id: string) => {
