@@ -6,13 +6,14 @@ import {
   screen,
   fireEvent,
   cleanup,
+  within,
 } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import { Router } from 'react-router-dom';
 import { createStore, combineReducers } from '@reduxjs/toolkit';
 import Users from './Users';
-import { initialState } from '../../__mock__/mockedStore';
-import reducer from './usersSlice';
+import initialState from '../../__mock__/mockedStore';
+import reducer, { UsersState } from './usersSlice';
 
 const mockStore = configureMockStore();
 
@@ -58,5 +59,85 @@ describe('<Users />', () => {
     );
     const newImgs = screen.getAllByRole('img');
     expect(newImgs.length).toEqual(5);
+  });
+
+  it('render users, when we sort name column by DESC', () => {
+    const rootReducer = combineReducers({ users: reducer });
+    const state = {
+      ...initialState,
+      users: {
+        ...initialState.users,
+        sorting: {
+          columnName: 'name',
+          rule: 'DESC',
+        },
+      } as UsersState,
+    };
+    const store = createStore(rootReducer, state);
+    const history = createMemoryHistory();
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <Users />
+        </Router>
+      </Provider>,
+    );
+    const usersListElement = screen.getByTestId('grid-element');
+    const name = within(usersListElement).getAllByRole('link')[0].textContent;
+    expect(name).toEqual('Sjur Låstad');
+  });
+
+  it('render users, when we sort name column by ASC', () => {
+    const rootReducer = combineReducers({ users: reducer });
+    const state = {
+      ...initialState,
+      users: {
+        ...initialState.users,
+        sorting: {
+          columnName: 'name',
+          rule: 'ASC',
+        },
+      } as UsersState,
+    };
+    const store = createStore(rootReducer, state);
+    const history = createMemoryHistory();
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <Users />
+        </Router>
+      </Provider>,
+    );
+    const usersListElement = screen.getByTestId('grid-element');
+    const name = within(usersListElement).getAllByRole('link')[0].textContent;
+    expect(name).toEqual('Alexander Martinez');
+  });
+
+  it('render users, when we have search text for name and for raiting', () => {
+    const rootReducer = combineReducers({ users: reducer });
+    const state = {
+      ...initialState,
+      users: {
+        ...initialState.users,
+        searchText: {
+          name: 'alex',
+          login: '',
+          email: '',
+          phone: '',
+          rating: '0',
+        },
+      } as UsersState,
+    };
+    const store = createStore(rootReducer, state);
+    const history = createMemoryHistory();
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <Users />
+        </Router>
+      </Provider>,
+    );
+    const imgs = screen.getAllByRole('img');
+    expect(imgs.length).toEqual(2);
   });
 });

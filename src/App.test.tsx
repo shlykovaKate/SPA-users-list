@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { render, screen } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
-import { UsersState } from './types/types';
+import { UsersState } from './features/users/usersSlice';
 
 import App from './App';
 
@@ -19,10 +19,8 @@ const initialState: UsersState = {
     phone: '',
     rating: '',
   },
-  filteredUsers: [],
   sorting: {
-    columnName: '',
-    rule: '',
+    columnName: 'name',
   },
 };
 

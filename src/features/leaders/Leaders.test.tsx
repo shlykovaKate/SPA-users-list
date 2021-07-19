@@ -5,7 +5,7 @@ import { render, screen } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import { Router } from 'react-router-dom';
 import Leaders from './Leaders';
-import { initialState } from '../../__mock__/mockedStore';
+import initialState from '../../__mock__/mockedStore';
 
 const mockStore = configureMockStore();
 

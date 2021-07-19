@@ -25,7 +25,8 @@
     "rules": {
         "no-param-reassign": ["error", { "props": false }],
         "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "off"
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "no-nested-ternary": "off"
     },
     "settings": {
         "react": {

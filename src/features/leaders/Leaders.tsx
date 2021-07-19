@@ -5,8 +5,7 @@ import React, {
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAppSelector } from '../../app/hooks';
-import { selectUsers } from '../users/usersSlice';
-import { User } from '../../types/types';
+import { selectUsers, User } from '../users/usersSlice';
 
 const Grid = styled.div`
   display: grid;

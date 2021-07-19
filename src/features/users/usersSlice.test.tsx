@@ -1,5 +1,5 @@
 import reducer from './usersSlice';
-import { initialState, filteredUsers } from '../../__mock__/mockedStore';
+import initialState from '../../__mock__/mockedStore';
 
 describe('usersSlice', () => {
   it('should work the changeUserRating reducer', () => {
@@ -43,27 +43,15 @@ describe('usersSlice', () => {
       ...initialState.users,
       sorting: {
         columnName: 'name',
-        rule: 'DSC',
+        rule: 'DESC',
       },
     };
     const newState = reducer(initialState.users, {
       type: 'users/addSorting',
       payload: {
         columnName: 'name',
-        rule: 'DSC',
+        rule: 'DESC',
       },
-    });
-    expect(newState).toEqual(expectedState);
-  });
-
-  it('should work the loadFilteredUsers reducer', () => {
-    const expectedState = {
-      ...initialState.users,
-      filteredUsers,
-    };
-    const newState = reducer(initialState.users, {
-      type: 'users/loadFilteredUsers',
-      payload: filteredUsers,
     });
     expect(newState).toEqual(expectedState);
   });
@@ -84,20 +72,6 @@ describe('usersSlice', () => {
       ...initialState.users,
       status: 'idle',
       users: [
-        {
-          email: 'alba.montero@example.com',
-          id: '0972d854-c9bb-4d14-a6cf-65482f4a8d07',
-          login: 'yellowkoala383',
-          name: 'Alba Montero',
-          phone: '992-658-046',
-          picture: {
-            avatar: 'https://randomuser.me/api/portraits/thumb/women/15.jpg',
-            large: 'https://randomuser.me/api/portraits/women/15.jpg',
-          },
-          rating: 0,
-        },
-      ],
-      filteredUsers: [
         {
           email: 'alba.montero@example.com',
           id: '0972d854-c9bb-4d14-a6cf-65482f4a8d07',

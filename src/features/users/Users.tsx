@@ -9,9 +9,14 @@ import SearchInput from '../usersActionBar/SearchInput';
 import Sorting from '../usersActionBar/Sorting';
 import Rating from '../usersActionBar/Rating';
 import {
-  selectFilteredUsers,
   removeUser,
+  selectSorting,
+  selectUsers,
+  selectSearchText,
+  User,
+  UsersState,
 } from './usersSlice';
+import sortBy from '../../utils/sortBy';
 
 const Grid = styled.div`
   display: grid;
@@ -85,7 +90,28 @@ const FilterItemsBlock = styled.div`
 
 const Users: FC = () => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(selectFilteredUsers);
+  const allUsers = useAppSelector(selectUsers);
+  const sorting = useAppSelector(selectSorting);
+  const searchText = useAppSelector(selectSearchText);
+
+  const searchUsers = (users: User[], texts: UsersState['searchText']) => {
+    const arr = Object.keys(texts).map((item) => item as keyof UsersState['searchText']);
+
+    return arr.reduce((result, columnName) => {
+      if (searchText[columnName]) {
+        return result.filter((user) => {
+          if (columnName === 'rating') {
+            return user[columnName] === Number(searchText[columnName]);
+          }
+          return user[columnName].toLowerCase().indexOf(searchText[columnName]) !== -1;
+        });
+      }
+      return result;
+    }, users);
+  };
+
+  const sortedUsers = sorting.rule ? sortBy(allUsers, sorting) : allUsers;
+  const searchedUsers = searchUsers(sortedUsers, searchText);
 
   const handleClick = (id: string) => {
     dispatch(removeUser(id));
@@ -134,7 +160,7 @@ const Users: FC = () => {
           <Sorting columnName="rating" />
         </HeaderCell>
         <HeaderCell>&nbsp;</HeaderCell>
-        {users.map((user) => (
+        {searchedUsers.map((user) => (
           <Fragment key={user.id}>
             <ThemeProvider theme={user.rating < -3 ? smallRating : normalRating}>
               <Img><img src={user.picture.avatar} alt={user.name} /></Img>

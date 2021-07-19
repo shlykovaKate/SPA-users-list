@@ -2,25 +2,22 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
-  selectUsers,
   selectSearchNameText,
   selectSearchLoginText,
   selectSearchEmailText,
   selectSearchPhoneText,
   selectSearchRatingText,
   addSearchText,
-  loadFilteredUsers,
   selectSearchText,
+  UsersState,
 } from '../users/usersSlice';
-import { SortItem } from '../../types/types';
 
 const SearchInputArea = styled.div`
   padding: 10px;
 `;
 
-const SearchInput: FC<SortItem> = ({ columnName }: SortItem) => {
+const SearchInput: FC<UsersState['sorting']> = ({ columnName }: UsersState['sorting']) => {
   const dispatch = useAppDispatch();
-  const users = useAppSelector(selectUsers);
   const searchText = useAppSelector(selectSearchText);
   let inputValue;
 
@@ -56,18 +53,6 @@ const SearchInput: FC<SortItem> = ({ columnName }: SortItem) => {
       ...searchText,
       [columnName]: value,
     }));
-
-    if (value) {
-      const filteredUsers = users.filter((user) => {
-        if (columnName === 'rating') {
-          return user[columnName] === Number(value);
-        }
-        return (user[columnName] as string).toLowerCase().indexOf(value) !== -1;
-      });
-      dispatch(loadFilteredUsers(filteredUsers));
-    } else {
-      dispatch(loadFilteredUsers(users));
-    }
   };
 
   return (
